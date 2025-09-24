@@ -1,0 +1,24 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Environment files
+.env
+.venv/
+*.env
+
+# macOS
+.DS_Store
+
+# AWS config
+.aws/
+
+# Logs
+*.log
+
+# Data
+data/

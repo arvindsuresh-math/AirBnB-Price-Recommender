@@ -1,0 +1,14 @@
+name: airbnb-project
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pyspark
+  - pandas
+  - jupyterlab
+  - boto3
+  - sqlalchemy
+  - ipykernel
+  - pip
+  - pip:
+      - great_expectations
