@@ -65,7 +65,9 @@ All are free and available for macOS and Windows.
 
 Apache Spark requires Java. Since this project installs Java via Conda, you need to tell Spark where to find it.
 
-### ✅ One-Time Setup (per environment)
+### 🐧 macOS / Linux
+
+#### ✅ One-Time Setup (per environment)
 
 Run the following **after you've created the environment** and run `conda activate airbnb-project`:
 
@@ -90,6 +92,30 @@ chmod +x $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
 This ensures that every time you activate the `airbnb-project` environment, the `JAVA_HOME` variable is set correctly for PySpark to launch.
 
 ---
+
+### 🪟 Windows (via Anaconda Prompt)
+
+After running `conda activate airbnb-project`, configure Java like this:
+
+#### ✅ One-Time Setup (per environment)
+
+i. Create the `activate.d` folder if it doesn't exist:
+
+```cmd
+mkdir %CONDA_PREFIX%\etc\conda\activate.d
+```
+
+ii. Create a new file named:
+
+```cmd
+%CONDA_PREFIX%\etc\conda\activate.d\env_vars.bat
+```
+
+iii. Inside that file, add this line:
+
+```cmd
+set JAVA_HOME=%CONDA_PREFIX%\Library
+```
 
 ### ✅ How to Check That Java Is Set Up Correctly
 
