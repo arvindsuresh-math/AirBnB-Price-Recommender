@@ -1,0 +1,5 @@
+Field	Type	Description
+listing_id	long	Unique identifier for the listing
+date	date	First day of the month when reviews were aggregated
+num_reviews	long	Number of reviews for the listing
+reviewers	array<long>	List of reviewer IDs

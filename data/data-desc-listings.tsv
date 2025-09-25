@@ -1,0 +1,65 @@
+Field	Type	Description
+listing_id	long	Unique identifier for the listing
+listing_name	string	Title of the listing
+listing_type	string	Type of property (e.g., apartment, house, villa)
+room_type	string	Type of room (e.g., entire home, private room)
+cover_photo_url	string	URL of the main listing photo
+photos_count	integer	Number of photos available for the listing
+host_id	long	Unique identifier for the host
+host_name	string	Name of the host
+cohost_ids	string	Ids of co-hosts associated with the listing
+cohost_names	string	Names of co-hosts associated with the listing
+superhost	boolean	Whether the host is a superhost
+country	string	Country where the listing is located
+state	string	State or province where the listing is located
+city	string	City where the listing is located
+latitude	decimal(10,4)	Geographical latitude coordinate
+longitude	decimal(10,4)	Geographical longitude coordinate
+guests	integer	Maximum number of guests allowed
+bedrooms	integer	Number of bedrooms available
+beds	integer	Number of beds available
+baths	decimal(4,1)	Number of bathrooms available
+registration	boolean	Indicates if the listing has a registration number
+amenities	string	List of amenities offered
+instant_book	boolean	Whether the listing can be booked instantly
+min_nights	integer	Minimum number of nights required to book
+cancellation_policy	string	Type of cancellation policy offered
+currency	string	Currency used for pricing
+cleaning_fee	integer	The cleaning fee for the listing
+extra_guest_fee	integer	Fee for each extra guest
+num_reviews	integer	Total number of reviews received
+rating_overall	double	Overall rating score
+rating_accuracy	double	Rating score for listing accuracy
+rating_checkin	double	Rating score for check-in experience
+rating_cleanliness	double	Rating score for cleanliness
+rating_communication	double	Rating score for host communication
+rating_location	double	Rating score for location
+rating_value	double	Rating score for value
+ttm_revenue	double	Total revenue in trailing twelve months
+ttm_revenue_native	double	Total revenue in native currency in trailing twelve months
+ttm_avg_rate	double	Average daily rate in trailing twelve months
+ttm_avg_rate_native	double	Average daily rate in native currency in trailing twelve months
+ttm_occupancy	double	Occupancy rate in trailing twelve months
+ttm_adjusted_occupancy	double	Adjusted occupancy rate in trailing twelve months, excluding owner-blocked days
+ttm_revpar	double	Revenue per available room (RevPAR) in trailing twelve months
+ttm_revpar_native	double	Revenue per available room (RevPAR) in native currency in trailing twelve months
+ttm_adjusted_revpar	double	Adjusted RevPAR in trailing twelve months
+ttm_adjusted_revpar_native	double	Adjusted RevPAR in native currency in trailing twelve months
+ttm_reserved_days	long	Number of booked/reserved days in trailing twelve months
+ttm_blocked_days	long	Number of host-blocked days in trailing twelve months
+ttm_available_days	long	Number of available days in trailing twelve months
+ttm_total_days	long	Total number of days in trailing twelve months (reserved + available)
+l90d_revenue	double	Revenue in the last 90 days
+l90d_revenue_native	double	Revenue in native currency in the last 90 days
+l90d_avg_rate	double	Average daily rate in the last 90 days
+l90d_avg_rate_native	double	Average daily rate in native currency in the last 90 days
+l90d_occupancy	double	Occupancy rate in the last 90 days
+l90d_adjusted_occupancy	double	Adjusted occupancy rate in the last 90 days
+l90d_revpar	double	RevPAR in the last 90 days
+l90d_revpar_native	double	RevPAR in native currency in the last 90 days
+l90d_adjusted_revpar	double	Adjusted RevPAR in the last 90 days
+l90d_adjusted_revpar_native	double	Adjusted RevPAR in native currency in the last 90 days
+l90d_reserved_days	long	Number of reserved days in the last 90 days
+l90d_blocked_days	long	Number of blocked days in the last 90 days
+l90d_available_days	long	Number of available days in the last 90 days
+l90d_total_days	long	Total number of days considered in the last 90 days period
