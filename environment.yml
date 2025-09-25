@@ -4,6 +4,9 @@ channels:
 dependencies:
   - python=3.12
 
+  # Java
+  - openjdk=17
+
   # Core data tools
   - pandas
   - pyarrow
