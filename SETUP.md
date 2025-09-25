@@ -10,9 +10,9 @@ Please install the following tools before you start:
 
 | Tool | Purpose | Link |
 |------|---------|------|
-| **Anaconda** | Manage Python + dependencies in an isolated environment | https://www.anaconda.com/download |
-| **GitHub Desktop** | Simple graphical app for Git repo management | https://desktop.github.com |
-| **Visual Studio Code (VS Code)** | Code editor with Git and Python integration | https://code.visualstudio.com |
+| **Anaconda** | Manage Python + dependencies in an isolated environment | <https://www.anaconda.com/download> |
+| **GitHub Desktop** | Simple graphical app for Git repo management | <https://desktop.github.com> |
+| **Visual Studio Code (VS Code)** | Code editor with Git and Python integration | <https://code.visualstudio.com> |
 
 All are free and available for macOS and Windows.
 
@@ -25,9 +25,11 @@ All are free and available for macOS and Windows.
 1. Open GitHub Desktop.
 2. Go to `File ▷ Clone Repository...`
 3. Use this URL:  
+
    ```
    https://github.com/arvindsuresh-math/Fall-2025-Team-Big-Data.git
    ```
+
 4. Choose a local folder and click **Clone**.
 5. Open the repo in VS Code via **Repository ▷ Open in Visual Studio Code**.
 
@@ -59,7 +61,73 @@ All are free and available for macOS and Windows.
 
 ---
 
-## 3. Securely Manage Secrets
+## 3. Configure Java for PySpark
+
+Apache Spark requires Java. Since this project installs Java via Conda, you need to tell Spark where to find it.
+
+### ✅ One-Time Setup (per environment)
+
+Run the following **after you've created the environment** and run `conda activate airbnb-project`:
+
+i. Make sure the activation hook directory exists:
+
+```bash
+mkdir -p $CONDA_PREFIX/etc/conda/activate.d
+```
+
+ii. Add JAVA_HOME setting to a new hook script
+
+```bash
+echo 'export JAVA_HOME=$CONDA_PREFIX/lib/jvm' > $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+```
+
+iii. Make the script executable (optional but good practice)
+
+```bash
+chmod +x $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+```
+
+This ensures that every time you activate the `airbnb-project` environment, the `JAVA_HOME` variable is set correctly for PySpark to launch.
+
+---
+
+### ✅ How to Check That Java Is Set Up Correctly
+
+**After activating the environment**, run:
+
+```bash
+echo $JAVA_HOME
+```
+
+Expected output:
+
+```
+/opt/miniconda3/envs/airbnb-project/lib/jvm
+```
+
+Then check that Java is working:
+
+```bash
+java -version
+```
+
+Expected output:
+
+```
+openjdk 17.0.x ...
+```
+
+Optionally, from inside a notebook or Python shell:
+
+```python
+import os
+print(os.environ.get("JAVA_HOME"))
+```
+
+If all of the above work, Java is properly configured and you're ready to use Spark.
+
+
+## 4. Securely Manage Secrets
 
 If you need to store credentials (e.g., AWS, API keys), do the following:
 
@@ -88,7 +156,7 @@ pip install python-dotenv
 
 ---
 
-## 4. Create Your Own Branch (One-Time Setup)
+## 5. Create Your Own Branch (One-Time Setup)
 
 > Never work directly on the `main` branch.
 
@@ -102,27 +170,34 @@ pip install python-dotenv
 
 ---
 
-## 5. Daily Workflow
+## 6. Daily Workflow
 
 Here’s the workflow you should follow each time you sit down to work:
 
 1. **Open the repo in VS Code**
 2. **Open a terminal and activate the environment**:
+
     ```bash
     conda activate airbnb-project
     ```
+
 3. **Make sure you're on your own branch**:
+
     ```bash
     git branch
     git checkout yourname-dev
     ```
+
 4. **Pull updates from `main` periodically**:
+
     ```bash
     git pull origin main
     ```
+
 5. **Do your work**: notebooks, scripts, etc.
 6. **Commit and push changes**:
     - Use GitHub Desktop or run:
+
       ```bash
       git add .
       git commit -m "Your commit message"
@@ -131,7 +206,7 @@ Here’s the workflow you should follow each time you sit down to work:
 
 ---
 
-## 6. First-Time .env Setup Example
+## 7. First-Time .env Setup Example
 
 Create a file named `.env` in the project root:
 
@@ -144,7 +219,7 @@ Do **not** share this file or commit it to Git.
 
 ---
 
-## 7. Summary Checklist ✅
+## 8. Summary Checklist ✅
 
 - [ ] Install Anaconda, GitHub Desktop, and VS Code
 - [ ] Clone the repo using GitHub Desktop
