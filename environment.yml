@@ -3,12 +3,25 @@ channels:
   - conda-forge
 dependencies:
   - python=3.12
-  - pyspark
+
+  # Core data tools
   - pandas
+  - pyarrow
+  - pyspark
+  - duckdb
+
+  # Visualization
+  - matplotlib
+  - seaborn
+  - plotly
+
+  # Jupyter
   - jupyterlab
+  - ipykernel
+
+  # AWS and SQL utilities
   - boto3
   - sqlalchemy
-  - ipykernel
-  - pip
-  - pip:
-      - great_expectations
+
+  # Optional: for profiling
+  - ydata-profiling
