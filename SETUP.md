@@ -117,6 +117,8 @@ iii. Inside that file, add this line:
 set JAVA_HOME=%CONDA_PREFIX%\Library
 ```
 
+---
+
 ### ✅ How to Check That Java Is Set Up Correctly
 
 **After activating the environment**, run:
