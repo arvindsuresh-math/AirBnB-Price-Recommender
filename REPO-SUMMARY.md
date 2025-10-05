@@ -12,7 +12,7 @@ Fall-2025-Team-Big-Data/
 ├── .env                                         # Environment variables for secrets (ignored)
 ├── .gitattributes                               # Git file handling configuration
 ├── .gitignore                                   # Git ignore patterns for Python, Jupyter, AWS, data files
-├── README.md                                    # Main project overview and team information
+├── README.md                                    # Brief project overview and team information
 ├── SETUP.md                                     # Comprehensive setup guide for Conda, Java/PySpark, Git workflow
 ├── environment.yml                              # Conda environment specification with Python 3.12, PySpark, ML libs
 ├── instructions/                                # Detailed implementation plans for coding tasks
