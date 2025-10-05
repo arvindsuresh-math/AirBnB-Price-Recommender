@@ -133,3 +133,21 @@ A `Dockerfile` must be created in the root directory to containerize the applica
     # Define the command to run the app
     CMD ["streamlit", "run", "app.py"]
     ```*   A corresponding `requirements.txt` file must be created, containing `streamlit`, `pandas`, and `boto3`.
+
+## 6. Testing and Verification
+
+To ensure the backend communication logic is correct and robust, a unit test for the SageMaker interaction function must be created.
+
+1. **Test Script:**
+    * **Location:** `/Fall-2025-Team-Big-Data/tests/`
+    * **Name:** `test_app_logic.py`
+2. **Dependency:** `unittest.mock`.
+3. **Implementation:**
+    * Create a test function `test_get_price_recommendation_api_call()`.
+    * Use the `@patch('boto3.client')` decorator to mock the `boto3` library.
+    * Inside the test, configure the mock client and its `invoke_endpoint` method to return a known, sample JSON response.
+    * Call the `get_price_recommendation` function with a sample payload dictionary. Set `MOCK_API_CALL=False` for this test.
+    * **Assert Core Logic:**
+        1. Assert that the mock `invoke_endpoint` function was called exactly once.
+        2. Inspect the arguments passed to `invoke_endpoint` to verify that the `EndpointName` was correct and that the `Body` was a correctly formatted JSON string matching the input payload.
+        3. Assert that the final dictionary returned by the function matches the parsed content of the mock response.

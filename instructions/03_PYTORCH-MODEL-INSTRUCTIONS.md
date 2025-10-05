@@ -109,4 +109,27 @@ The script must include clear comments indicating where to make changes for the 
   * Add a commented-out section in `__init__` to define the projection layers and the `nn.TransformerEncoderLayer`.
   * Add a commented-out block in the `forward` pass showing the alternative data flow: `Embed -> Project -> Stack -> Transformer -> Unstack -> Prediction Heads -> Aggregate`. This will make it easy to switch between architectures.
 
-This specification provides a complete and unambiguous plan for implementing the model, starting with a functional baseline and providing a clear path for future enhancements.
+## 5. Testing and Verification
+
+To verify the model's architectural integrity and learning capability, a dedicated unit test script must be created.
+
+1. **Test Script:**
+    * **Location:** `/Fall-2025-Team-Big-Data/tests/`
+    * **Name:** `test_model.py`
+2. **Implementation:** The test script should contain at least two test functions:
+
+    * **`test_forward_pass_shapes()`:**
+        1. Instantiate the `ExplainablePriceModel`.
+        2. Create a "dummy batch" of tensors with the exact shapes and dtypes produced by the `DataLoader`.
+        3. Pass the dummy batch through `model.forward()`.
+        4. Assert that the call completes without raising an error.
+        5. Assert that the output dictionary contains the `predicted_price` key.
+        6. Assert that the `predicted_price` tensor has the correct shape: `(batch_size,)`.
+
+    * **`test_model_can_learn()` (Overfit-One-Batch Test):**
+        1. This is a critical sanity check to prove the model is trainable.
+        2. Instantiate the `Dataset` and `DataLoader`. Get a single, real batch of data.
+        3. Instantiate the model and an optimizer (`torch.optim.AdamW`).
+        4. Run a small training loop for 50-100 iterations, training *only on this single batch*.
+        5. In each step, calculate the loss and perform backpropagation.
+        6. After the loop, assert that the final loss is significantly lower than the initial loss and has converged to a value very close to zero (e.g., `assert final_loss < 1e-3`).

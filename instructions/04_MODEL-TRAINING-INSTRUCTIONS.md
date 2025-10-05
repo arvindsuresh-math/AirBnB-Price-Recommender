@@ -111,4 +111,12 @@ The script must include comments indicating where to make changes for advanced t
   * `# PHASE 2.i: To enable fine-tuning, replace the standard optimizer with the discriminative learning rate setup.`
   * `# See PYTORCH-MODEL-INSTRUCTIONS.md for the parameter grouping logic.`
 
-This specification provides a complete and unambiguous plan for the entire model training workflow, ensuring a reproducible and well-documented training process.
+## 6. Debugging and Robustness Instructions
+
+To ensure the training process is stable and easy to debug, the following features must be included in the script.
+
+1. **Gradient Clipping:** In the training loop, immediately after the `loss.backward()` call, add a gradient clipping step to prevent exploding gradients, which can lead to training instability (NaN losses).
+    * `torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)`
+2. **Sanity Check Logging:** At the beginning of the script's execution, use the `logging` module to print a summary of all key hyperparameters and configurations (learning rate, batch size, epochs, device, version string).
+3. **Fast Fail on Data Loading:** Immediately after the `create_dataloaders` call, add an assertion to verify that the datasets are not empty. This prevents the script from running a full epoch before failing on a data loading issue.
+    * `assert len(train_loader.dataset) > 0 and len(val_loader.dataset) > 0`

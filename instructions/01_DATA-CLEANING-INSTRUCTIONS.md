@@ -14,7 +14,7 @@ This specification details the creation of a Python script responsible for the c
 ### 2.2. Input Files
 
 * **Listings Data (Single Month):** `/Fall-2025-Team-Big-Data/data/nyc/nyc-listings-detailed-insideairbnb.csv`
-* **Reviews Data (Historical):** `<REVIEWS_CSV_PATH>` (This is an external, user-provided path to the full historical `reviews.csv` file. The script should accept this path as a command-line argument.)
+* **Reviews Data (Historical):** `~/Downloads/nyc-reviews-detailed-insideairbnb.csv` (This is an external, user-provided path to the full historical reviews file. The script should accept this path as a command-line argument.)
 
 ### 2.3. Output Artifacts
 
@@ -115,3 +115,18 @@ This table details the creation logic for every column in the final output file.
 ## 5. Final Output
 
 The final DataFrame must contain **only** the columns listed in the table above, in that order. The script should then save this DataFrame to the specified output path in Parquet format. Ensure the output directory is created before saving.
+
+## 6. Testing and Verification
+
+To ensure the correctness and integrity of the output data, the script must include a final validation step using the `pandera` library.
+
+1. **Dependency:** Add `pandera` to the `environment.yml` file.
+2. **Implementation:** At the end of the script, after the final DataFrame is constructed but before it is saved, define a `pandera.DataFrameSchema`.
+3. **Schema Definition:** The schema must, at a minimum, enforce the following rules:
+    * **Data Types:** Define the correct `dtype` for every column as specified in the schema table (e.g., `listing_id: pa.Int64`, `target_price: pa.Float64`, `host_is_superhost: pa.Bool`).
+    * **Non-Null Constraints:** Ensure critical columns cannot be null (`nullable=False` for `listing_id`, `year_month`, `target_price`, `estimated_occupancy_rate`).
+    * **Range Checks:** Use `pandera.Check` to validate the range of key numerical values:
+        * `check_price = pa.Check(lambda p: p > 0, name="price_must_be_positive")`
+        * `check_occupancy = pa.Check(lambda o: 0 <= o <= 1, name="occupancy_between_0_and_1")`
+        * `check_month = pa.Check(lambda m: 1 <= m <= 12, name="month_between_1_and_12")`
+4. **Execution:** Call `schema.validate(final_df, lazy=True)` within a `try...except` block. If validation fails, print the error and exit the script with a non-zero status code. If it succeeds, print a "Data validation successful." message before saving the artifacts.

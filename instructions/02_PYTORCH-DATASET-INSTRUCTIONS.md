@@ -98,3 +98,34 @@ This class is the core of the script. It will handle loading, indexing, and tran
         * Batching all the pre-computed tensors for location, size, etc.
         * Taking the list of `amenities_text` strings, passing them to a pre-trained tokenizer (e.g., from `BAAI/bge-small-en-v1.5`), and creating a batched tensor of `input_ids` and `attention_mask`. This is the standard and most efficient way to handle text tokenization.
     6. The function should return the three `DataLoader` objects: `(train_loader, val_loader, test_loader)`.
+
+## 5. Testing and Verification
+
+To verify the correctness of the `Dataset` and `DataLoader`, a dedicated unit test script must be created.
+
+1. **Test Script:**
+    * **Location:** `/Fall-2025-Team-Big-Data/tests/`
+    * **Name:** `test_data_loader.py`
+2. **Dependency:** Add `pytest` to the `environment.yml` file.
+3. **Implementation:** The test script should contain at least two test functions:
+
+    * **`test_dataset_item()`:**
+        1. Instantiate the `AirbnbNightlyPriceDataset` using the paths to the generated `.parquet` and `.json` artifacts.
+        2. Retrieve the first item: `sample = dataset[0]`.
+        3. Assert that the top-level keys (`'inputs'`, `'target'`, `'weight'`) exist.
+        4. Assert that all expected axis keys exist within `sample['inputs']`.
+        5. Assert the `dtype` and shape of several key tensors, for example:
+            * `assert sample['inputs']['location'].dtype == torch.float32`
+            * `assert sample['inputs']['location'].shape == (48,)`
+            * `assert isinstance(sample['inputs']['amenities_text'], str)`
+            * `assert sample['target'].shape == ()` (a scalar tensor)
+
+    * **`test_dataloader_batch()`:**
+        1. Call the `create_dataloaders` function to get the `train_loader`.
+        2. Retrieve the first batch: `batch = next(iter(train_loader))`.
+        3. Assert the shapes of the batched tensors. For example:
+            * `assert batch['inputs']['location'].shape == (batch_size, 48)`
+            * `assert batch['target'].shape == (batch_size,)`
+        4. Assert that the `collate_fn` correctly tokenized the amenities text:
+            * `assert 'amenities_input_ids' in batch['inputs']`
+            * `assert batch['inputs']['amenities_input_ids'].shape[0] == batch_size`
