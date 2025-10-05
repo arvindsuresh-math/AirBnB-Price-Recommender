@@ -8,28 +8,24 @@ This repository contains a deep learning project for building an explainable Air
 
 ```text
 Fall-2025-Team-Big-Data/
-├── .DS_Store                                    # macOS system file (ignored)
-├── .env                                         # Environment variables for secrets (ignored)
-├── .gitattributes                               # Git file handling configuration
-├── .gitignore                                   # Git ignore patterns for Python, Jupyter, AWS, data files
-├── README.md                                    # Brief project overview and team information
-├── SETUP.md                                     # Comprehensive setup guide for Conda, Java/PySpark, Git workflow
-├── environment.yml                              # Conda environment specification with Python 3.12, PySpark, ML libs
-├── instructions/                                # Detailed implementation plans for coding tasks
-│   ├── 01_DATA-CLEANING-INSTRUCTIONS.md         # Plan for creating the final modeling dataset
-│   ├── 02_PYTORCH-DATASET-INSTRUCTIONS.md       # Plan for creating the PyTorch Dataset/DataLoader
-│   ├── 03_PYTORCH-MODEL-INSTRUCTIONS.md         # Plan for implementing the PyTorch nn.Module
-│   ├── 04_MODEL-TRAINING-INSTRUCTIONS.md        # Plan for the model training and evaluation script
-│   └── 05_STREAMLIT-APP-INSTRUCTIONS.md         # Plan for building the Streamlit web application
-├── APP.md                                       # Technical specification for AWS deployment (SageMaker + Streamlit)
-├── COMP-SET.md                                  # Methodology for generating market comparable listings via 2-stage retrieval
-├── DATASET-SCHEMA.md                            # Schema definition for final modeling dataset (listing-month grain)
-├── EMBEDDINGS.md                                # Feature representation strategy for 5-axis neural network
-├── FEATURE-AXES.md                              # Additive price decomposition into 5 interpretable axes
-├── MODELING.md                                  # Multi-phase model architecture from baseline to advanced
-├── PRICING-TOOL-IDEA.md                         # Original project proposal for explainable pricing tool
-├── SUGGESTED-REFINEMENTS.md                     # AI-suggested improvements for model and architecture
-├── TARGET-PRICE.md                              # Target variable engineering using market-accepted prices
+├── .gitignore
+├── README.md
+├── APP.md
+├── COMP-SET.md
+├── DATASET-SCHEMA.md
+├── EMBEDDINGS.md
+├── FEATURE-AXES.md
+├── MODELING.md
+├── PRICING-TOOL-IDEA.md
+├── TARGET-PRICE.md
+├── environment.yml
+├── instructions/
+│   ├── 01_ETL_INSTRUCTIONS.md
+│   ├── 02_PYTORCH_DATASET_INSTRUCTIONS.md
+│   ├── 03_PYTORCH_MODEL_INSTRUCTIONS.md
+│   ├── 04_MODEL_TRAINING_INSTRUCTIONS.md
+│   ├── 05_SAGEMAKER_DEPLOYMENT_INSTRUCTIONS.md
+│   └── 06_STREAMLIT_APP_INSTRUCTIONS.md
 ├── Naive_NN_for_AirBNB_NYC.ipynb                # Initial neural network experiment with fastai tabular models
 ├── data/                                        # Data storage directory
 │   ├── data-description/                        # Data dictionary and schema files
@@ -72,25 +68,25 @@ Fall-2025-Team-Big-Data/
 
 ### Design Documentation Files
 
-- **README.md**: Project overview, team info, objectives for portfolio-grade ML pipeline on AWS.
-- **SETUP.md**: Complete development environment setup including Conda, Java/PySpark, Git workflow.
-- **APP.md**: AWS deployment architecture using SageMaker endpoints and Streamlit on App Runner.
-- **COMP-SET.md**: Two-stage retrieval system for finding comparable listings.
-- **DATASET-SCHEMA.md**: Final modeling dataset schema with listing-month grain.
-- **EMBEDDINGS.md**: Feature embedding strategies for the 5-axis neural network.
-- **FEATURE-AXES.md**: Additive price model decomposing price into 5 interpretable axes.
-- **MODELING.md**: Phased model development from simple additive baseline to advanced interactive architecture.
-- **PRICING-TOOL-IDEA.md**: Original project proposal for explainable pricing tool.
-- **TARGET-PRICE.md**: Target variable engineering using review activity as a proxy for market acceptance.
-- **SUGGESTED-REFINEMENTS.md**: AI-generated improvements for the overall project design.
+- **APP.md**: Technical specification for the AWS deployment architecture (SageMaker + Streamlit).
+- **COMP-SET.md**: Methodology for the two-stage retrieval system for finding comparable listings.
+- **DATASET-SCHEMA.md**: Final schema for the modeling dataset at the `listing-month` grain.
+- **EMBEDDINGS.md**: Feature representation and embedding strategies for the 5-axis neural network.
+- **FEATURE-AXES.md**: Defines the additive price decomposition into 5 interpretable axes.
+- **MODELING.md**: Phased model development from a simple additive baseline to more advanced architectures.
+- **PRICING-TOOL-IDEA.md**: **(Updated)** High-level project proposal reflecting the final design decisions.
+- **TARGET-PRICE.md**: The definitive guide to engineering the target variable using review velocity as a proxy for market acceptance and as a sample weight.
 
-### Implementation Instruction Files (`instructions/`)
+### LLM Agent Instruction Files (`instructions/`)
 
-- **01_DATA-CLEANING-INSTRUCTIONS.md**: Detailed plan for the script that creates the final modeling dataset.
-- **02_PYTORCH-DATASET-INSTRUCTIONS.md**: Detailed plan for the PyTorch `Dataset` and `DataLoader` implementation.
-- **03_PYTORCH-MODEL-INSTRUCTIONS.md**: Detailed plan for implementing the PyTorch `nn.Module` for the phased model architecture.
-- **04_MODEL-TRAINING-INSTRUCTIONS.md**: Detailed plan for the model training, validation, and evaluation script.
-- **05_STREAMLIT-APP-INSTRUCTIONS.md**: Detailed plan for building the Streamlit web application UI and backend communication.
+These files are information-dense blueprints designed to be fed to an LLM agent to generate the project's codebase. Each includes specifications for implementation, dependencies, and unit tests.
+
+- **01_ETL_INSTRUCTIONS.md**: Generates the PySpark script to build the final modeling dataset from raw data.
+- **02_PYTORCH_DATASET_INSTRUCTIONS.md**: Generates the PyTorch `Dataset` and `FeatureProcessor` classes for data transformation and loading.
+- **03_PYTORCH_MODEL_INSTRUCTIONS.md**: Generates the PyTorch `nn.Module` for the additive 5-axis model architecture.
+- **04_MODEL_TRAINING_INSTRUCTIONS.md**: Generates the main script for training, validation, and saving model artifacts.
+- **05_SAGEMAKER_DEPLOYMENT_INSTRUCTIONS.md**: Generates the inference script and a deployment utility for AWS SageMaker.
+- **06_STREAMLIT_APP_INSTRUCTIONS.md**: Generates the Streamlit web application for user interaction.
 
 ### Code Files
 

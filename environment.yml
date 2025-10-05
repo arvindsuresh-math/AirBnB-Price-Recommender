@@ -9,6 +9,7 @@ dependencies:
 
   # Core data tools
   - pandas
+  - pandera
   - pyarrow
   - pyspark
   - duckdb
