@@ -26,8 +26,6 @@ Fall-2025-Team-Big-Data/
 ├── TARGET-PRICE.md                              # Target variable engineering using market-accepted prices
 ├── Naive_NN_for_AirBNB_NYC.ipynb               # Initial neural network experiment with fastai tabular models
 ├── data/                                        # Data storage directory
-│   ├── .DS_Store                               # macOS system file
-│   ├── airbnb-review-dates.png                 # Visualization of review date patterns
 │   ├── data-description/                       # Data dictionary and schema files
 │   │   ├── data-desc-calendar.csv             # Calendar dataset schema description
 │   │   ├── data-desc-listings.csv             # Listings dataset schema description
@@ -38,19 +36,19 @@ Fall-2025-Team-Big-Data/
 │   │       ├── data-desc-past-calender-rates.tsv # AirROI calendar rates schema
 │   │       └── data-desc-reviews.tsv          # AirROI reviews schema
 │   ├── nyc/                                    # New York City dataset files
-│   │   ├── nyc-listings.csv                   # NYC listings data (CSV format)
-│   │   ├── nyc-listings.parquet               # NYC listings data (Parquet format)
-│   │   ├── nyc-past-calender-rates.csv        # NYC historical calendar/pricing data (CSV)
-│   │   ├── nyc-past-calender-rates.parquet    # NYC historical calendar/pricing data (Parquet)
-│   │   ├── nyc-reviews.csv                    # NYC reviews data (CSV format)
-│   │   └── nyc-reviews.parquet                # NYC reviews data (Parquet format)
-│   └── toronto/                                # Toronto dataset files (same structure as NYC)
-│       ├── toronto-listings.csv               # Toronto listings data (CSV format)
-│       ├── toronto-listings.parquet           # Toronto listings data (Parquet format)
-│       ├── toronto-past-calender-rates.csv    # Toronto historical calendar/pricing data (CSV)
-│       ├── toronto-past-calender-rates.parquet # Toronto historical calendar/pricing data (Parquet)
-│       ├── toronto-reviews.csv                # Toronto reviews data (CSV format)
-│       └── toronto-reviews.parquet            # Toronto reviews data (Parquet format)
+│   │   ├── nyc-listings-detailed-insideairbnb.csv
+│   │   ├── airroi/
+│   │   │   ├── nyc-listings-airroi.csv
+│   │   │   ├── nyc-past-calendar-rates-airroi.csv
+│   │   │   └── nyc-reviews-airroi.csv
+│   │   └── insideairbnb-samples/
+│   │       ├── nyc-calendar-insideairbnb-sample.csv
+│   │       ├── nyc-listings-detailed-insideairbnb-sample.csv
+│   │       └── nyc-reviews-detailed-insideairbnb-sample.csv
+│   └── toronto/                                # Toronto dataset files
+│       ├── toronto-listings.csv
+│       ├── toronto-past-calender-rates.csv
+│       └── toronto-reviews.csv
 ├── notebooks/                                  # Jupyter notebooks directory
 │   └── .gitkeep                               # Placeholder to maintain empty directory in Git
 ├── scripts/                                    # Python scripts directory
