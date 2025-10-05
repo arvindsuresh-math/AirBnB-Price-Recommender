@@ -1,0 +1,31 @@
+column_name,data_type,description,example_value,notes
+id,Integer,Unique identifier for each listing.,2539,Primary key for joining with other tables.
+last_scraped,Date,The date when the data for this listing was collected.,2025-08-03,Useful for temporal analysis and versioning datasets.
+host_id,Integer,Unique identifier for each host.,2787,Can be used to analyze host-level characteristics.
+host_since,Date,The date the host joined Airbnb.,2008-09-07,
+host_is_superhost,Boolean,Indicates if the host is a designated Superhost.,f,"Categorical feature ('t'/'f'). Needs to be converted to boolean or binary."
+neighbourhood_cleansed,String,The specific neighborhood of the listing.,Kensington,Key categorical feature for location.
+neighbourhood_group_cleansed,String,The borough or larger area the neighborhood belongs to.,Brooklyn,Higher-level categorical feature for location.
+latitude,Float,The latitude of the listing.,40.64529,Core feature for the 'Location' axis.
+longitude,Float,The longitude of the listing.,-73.97238,Core feature for the 'Location' axis.
+property_type,String,The type of property (e.g., Entire rental unit, Private room).,Private room in condo,Key categorical feature for the 'Size/Capacity' axis.
+room_type,String,The type of room offered (e.g., Entire home/apt, Private room).,Private room,Key categorical feature for the 'Size/Capacity' axis.
+accommodates,Integer,The maximum number of guests the listing can accommodate.,2,Core numeric feature for the 'Size/Capacity' axis.
+bathrooms_text,String,A descriptive string for the bathroom count and type.,1 shared bath,"Needs parsing to extract numeric value and type (private/shared)."
+bedrooms,Float,The number of bedrooms.,1.0,Core numeric feature for the 'Size/Capacity' axis. Can be null.
+beds,Float,The number of beds.,1.0,Core numeric feature for the 'Size/Capacity' axis. Can be null.
+amenities,String,A JSON-formatted string listing all available amenities.,"[""Microwave"", ""Fast wifi"", ...]",A critical but complex feature for the 'Amenities' axis. Requires significant parsing or embedding.
+price,Float,The nightly price set by the host in USD.,260.00,"The primary target variable for the model. Stored as a string with '$', requires cleaning."
+minimum_nights,Integer,The minimum number of nights required for a booking.,30,Important for understanding rental type (short-term vs. long-term).
+maximum_nights,Integer,The maximum number of nights allowed for a booking.,730,
+number_of_reviews,Integer,The total number of reviews the listing has received.,9,Core feature for the 'Reviews' axis.
+first_review,Date,The date of the first review.,2015-12-04,
+last_review,Date,The date of the most recent review.,2018-10-19,
+review_scores_rating,Float,"The overall rating of the listing (1-5).",4.89,"Key feature for the 'Reviews' axis. May have missing values."
+review_scores_cleanliness,Float,"The rating for cleanliness (1-5).",5.0,Sub-score for the 'Reviews' axis.
+review_scores_checkin,Float,"The rating for the check-in process (1-5).",5.0,Sub-score for the 'Reviews' axis.
+review_scores_communication,Float,"The rating for host communication (1-5).",5.0,Sub-score for the 'Reviews' axis.
+review_scores_location,Float,"The rating for the location (1-5).",4.75,Sub-score for the 'Reviews' axis.
+review_scores_value,Float,"The rating for value (1-5).",4.88,Sub-score for the 'Reviews' axis.
+instant_bookable,Boolean,Indicates if a guest can book the listing without host approval.,f,"Categorical feature ('t'/'f')."
+reviews_per_month,Float,The average number of reviews per month.,0.08,Feature for the 'Reviews' axis.

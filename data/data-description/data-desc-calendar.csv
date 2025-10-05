@@ -1,0 +1,8 @@
+column_name,data_type,description,example_value,notes
+listing_id,Integer,The identifier for the listing.,2539,Foreign key to join with the 'listings' table.
+date,Date,The specific calendar date this row refers to.,2025-08-03,Forms a daily time-series for each listing.
+available,Boolean,Indicates if the listing is available for booking on this date.,t,"Categorical ('t'/'f'). This is the primary information in this dataset."
+price,Float,The price for the listing on this specific date.,,All values are null in the provided sample. This confirms it cannot be used for target construction.
+adjusted_price,Float,The price adjusted by Airbnb's Smart Pricing.,,All values are null in the provided sample.
+minimum_nights,Integer,Minimum stay requirement if booking starts on this date.,30,May vary from the default in the listings file.
+maximum_nights,Integer,Maximum stay allowed if booking starts on this date.,730,

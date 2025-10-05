@@ -1,0 +1,15 @@
+Field	Type	Description
+listing_id	long	Unique identifier for the listing
+date	date	First day of the month for aggregated monthly data
+vacant_days	integer	Number of days the property was vacant
+reserved_days	integer	Number of days the property was reserved
+occupancy	double	Occupancy rate
+revenue	double	Total revenue generated during the month
+rate_avg	double	Average daily rate
+booked_rate_avg	double	Average rate when booked
+booking_lead_time_avg	integer	Average booking lead time in days
+length_of_stay_avg	integer	Average length of stay in days
+min_nights_avg	integer	Average minimum nights requirement
+native_booked_rate_avg	double	Average rate when booked in native currency
+native_rate_avg	double	Average daily rate in native currency
+native_revenue	double	Revenue generated in native currency

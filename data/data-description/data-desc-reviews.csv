@@ -1,0 +1,7 @@
+column_name,data_type,description,example_value,notes
+listing_id,Integer,The identifier for the listing being reviewed.,2539,Foreign key to join with the 'listings' table.
+id,Integer,Unique identifier for each review.,55688172,Primary key for this table.
+date,Date,The date the review was submitted.,2015-12-04,Useful for time-series analysis of reviews.
+reviewer_id,Integer,Unique identifier for the reviewer.,25160947,
+reviewer_name,String,The public name of the reviewer.,Peter,
+comments,String,"The full text content of the review.","Great host",Contains valuable unstructured text. Can contain HTML tags and be in various languages.
