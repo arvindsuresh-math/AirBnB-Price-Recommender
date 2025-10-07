@@ -143,30 +143,48 @@ The script will implement the following transformations in sequence.
 
 ## 3. Verification and Unit Tests
 
-You will also generate a test script at `tests/test_etl_pipeline.py` using the `pytest` framework.
+You will generate a test script at `tests/test_etl_pipeline.py`. The tests will use a small, in-memory DataFrame fixture to test specific logic units.
 
-### Test Setup (`conftest.py` or fixture)
-*   The test script will use the sample data files located in `data/nyc/insideairbnb-samples/`.
-*   Create a `pytest.fixture` that runs your generated `build_dataset.py` script on these sample files, saving the output to a temporary directory. The fixture should return the path to the output Parquet file.
+### 3.1. Test Fixture with Edge Cases (`pytest.fixture`)
 
-### Test Cases
-Generate the following test functions:
+*   Create a `pytest.fixture` named `edge_case_dataframe()`.
+*   Inside this fixture, create a `pandas.DataFrame` from a dictionary. This DataFrame must have 3-4 rows and contain the columns needed for testing.
+*   **Crucially, manually craft the data in these rows to represent specific edge cases:**
 
-1.  **`test_output_schema(processed_data_path)`**:
-    *   Loads the output Parquet file into a Spark DataFrame.
-    *   Asserts that the schema of this DataFrame is identical to the `FINAL_SCHEMA` defined in Section 1.2. Check column names, types, and nullability.
+```python
+import pandas as pd
+import numpy as np
+import pytest
 
-2.  **`test_no_nulls_in_critical_columns(processed_data_path)`**:
-    *   Loads the data.
-    *   Asserts that the count of nulls in `listing_id`, `target_price`, and `estimated_occupancy_rate` is 0.
+@pytest.fixture(scope="session")
+def edge_case_dataframe():
+    data = {
+        'listing_id':,
+        'price': ['$50.00', '$1,250.00', None, '$100.00'],
+        'bedrooms': [1.0, 2.0, np.nan, 1.0], # Edge Case: NaN for imputation
+        'bathrooms_text': ['1 private bath', '2.5 baths', '1 shared bath', 'Half-bath'], # Edge Cases
+        'host_is_superhost': ['t', 'f', 't', 'f'], # Edge Case: both 't' and 'f'
+        # ... add other necessary columns with normal data ...
+    }
+    return pd.DataFrame(data)
+```
 
-3.  **`test_value_ranges(processed_data_path)`**:
-    *   Loads the data.
-    *   Asserts that all values in `target_price` are greater than 0.
-    *   Asserts that all values in `estimated_occupancy_rate` are between 0.0 and 1.0 (inclusive).
-    *   Asserts that all values in `month` are between 1 and 12 (inclusive).
+### 3.2. Unit Test Cases
 
-4.  **`test_bathroom_parsing_logic(processed_data_path)`**:
-    *   Loads the data.
-    *   Finds a specific, known row from the sample `listings` data (e.g., a listing with "1.5 shared baths").
-    *   Asserts that for this `listing_id`, the `bathrooms_numeric` column is `1.5` and the `bathrooms_type` column is `"shared"`.
+These tests will use the `edge_case_dataframe` fixture, converted to a Spark DataFrame.
+
+1.  **`test_price_cleaning(spark_session, edge_case_dataframe)`**:
+    *   Run the price cleaning logic on the test DataFrame.
+    *   Assert that `'$1,250.00'` correctly becomes the float `1250.0`.
+    *   Assert that the row with the `None` price is handled gracefully (e.g., becomes `null`).
+
+2.  **`test_imputation_logic(spark_session, edge_case_dataframe)`**:
+    *   Run the imputation logic.
+    *   Calculate the expected median for `bedrooms` from the fixture (which is `1.0`).
+    *   Assert that the row with `np.nan` in `bedrooms` is now filled with `1.0`.
+
+3.  **`test_bathroom_parsing(spark_session, edge_case_dataframe)`**:
+    *   Run the bathroom parsing logic.
+    *   Assert that `'2.5 baths'` results in `bathrooms_numeric=2.5` and `bathrooms_type='private'`.
+    *   Assert that `'Half-bath'` results in `bathrooms_numeric=0.5` and `bathrooms_type='private'`.
+    *   Assert that `'1 shared bath'` results in `bathrooms_numeric=1.0` and `bathrooms_type='shared'`.
