@@ -117,6 +117,14 @@ def find_nearest_neighbors(query_idx: int, top_k: int = 5, radius_miles: float =
     nearest_original_indices = candidate_indices[nearest_candidate_indices]
     return nearest_original_indices[:top_k], weights
 
+# Retrieves the neighborhood_log_mean for a given neighborhood name.
+def get_neighborhood_log_mean(neighborhood_name: str, neighborhood_df: pd.DataFrame) -> float:
+    log_mean = neighborhood_df[neighborhood_df['neighbourhood_cleansed'] == neighborhood_name]['neighborhood_log_mean']
+    if not log_mean.empty:
+        return log_mean.iloc[0]
+    else:
+        return None
+    
 # ========================================================================================
 # MAIN STREAMLIT APPLICATION
 # ========================================================================================
@@ -150,7 +158,7 @@ def load_data():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     
     # Load the main dataset (Parquet is a fast, compressed file format for data)
-    listings_df = pd.read_parquet(os.path.join(script_dir, "nyc_full_dataset_with_details.parquet"))
+    listings_df = pd.read_parquet(os.path.join(script_dir, "nyc_map_dataset.parquet"))
     
     # Load the neighborhood boundary data for map visualization
     geojson_path = os.path.join(script_dir, "nyc-neighbourhoods.geojson")
@@ -174,6 +182,8 @@ price_contributions = {col.replace('p_', ''): listings_df[col].to_numpy()
 
 listing_ids = listings_df['id'].to_numpy()
 lat_lon_rad = np.deg2rad(listings_df[['latitude', 'longitude']].to_numpy())
+
+neighborhood_df = listings_df[['neighbourhood_cleansed', 'neighborhood_log_mean']].drop_duplicates()
 
 # --- Default filter values ---
 min_price = int(listings_df['price'].quantile(0.25))
@@ -254,24 +264,6 @@ st.sidebar.header("🔍 Filter Listings")
 # Action buttons for loading data and resetting filters
 st.sidebar.button("Load Listings", on_click=show_listings_callback)
 st.sidebar.button("Reset Filters", on_click=reset_filters_callback)
-
-# Price range slider - allows users to filter by nightly price
-# The 'key' parameter connects this control to session state
-st.sidebar.number_input(
-    "Minimum Price ($)",
-    min_value=0,      # No negative prices
-    max_value=price_max,      # Maximum possible value (from our data)
-    value=min_price,      # Default to the minimum price
-    key="min_price"         # This connects to st.session_state["min_price"]
-)
-
-st.sidebar.number_input(
-    "Maximum Price ($)",
-    min_value=price_min,      # Minimum possible value (from our data)
-    max_value=price_max,      # No negative prices
-    value=max_price,      # Default to the maximum price
-    key="max_price"         # This connects to st.session_state["max_price"]
-)
 
 # Room type selector - users can choose multiple room types
 st.sidebar.multiselect(
@@ -393,6 +385,17 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
     # --- NEIGHBORHOOD BOUNDARIES ---
     # Add neighborhood boundary lines to help users understand the geographic context
     if geojson_data:
+        # Enrich GeoJSON with neighborhood_log_mean data
+        for feature in geojson_data['features']:
+            neighborhood_name = feature['properties'].get('neighbourhood')
+            if neighborhood_name:
+                log_mean = get_neighborhood_log_mean(neighborhood_name, neighborhood_df)
+                if log_mean is not None:
+                    avg_price = np.exp(log_mean)
+                    feature['properties']['avg_price'] = f"${avg_price:.2f}"
+                else:
+                    feature['properties']['avg_price'] = "N/A"
+        
         folium.GeoJson(
             geojson_data,                    # Geographic boundary data loaded earlier
             name="Neighborhoods",           # Layer name (for map controls)
@@ -402,8 +405,8 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
                 "fillOpacity": 0            # No fill (transparent inside)
             },
             tooltip=folium.GeoJsonTooltip(
-                fields=["neighbourhood"],   # What data to show on hover
-                aliases=["Neighborhood:"],  # User-friendly labels
+                fields=["neighbourhood", "avg_price"],   # What data to show on hover
+                aliases=["Neighborhood:", "Average Price:"],  # User-friendly labels
                 localize=True              # Format for local conventions
             )
         ).add_to(m)
@@ -463,7 +466,7 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
     if st_data and st_data.get("last_object_clicked"):
         st.write("You clicked a listing marker!")
         clicked_data = st_data["last_object_clicked"]
-        st.json(clicked_data)  # Show raw click data for debugging
+        #st.json(clicked_data)  # Show raw click data for debugging
         
         # --- FIND THE CLICKED LISTING ---
         # Match the clicked coordinates to an actual listing in our data
@@ -515,15 +518,15 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
                             'Room Type': [clicked_listing.get('room_type', 'Unknown')] + similar_listings['room_type'].tolist(),
                             'Accommodates': [clicked_listing.get('accommodates', 0)] + similar_listings['accommodates'].tolist(),
                             'Bedrooms': [clicked_listing.get('bedrooms', 0)] + similar_listings['bedrooms'].tolist(),
-                            'Price': [f"${clicked_listing.get('price', 0):.2f}"] + [f"${p:.2}" for p in similar_listings['price']],
+                            'Price': [f"${clicked_listing.get('price', 0):.2f}"] + [f"${p:.2f}" for p in similar_listings['price']],
                             'Predicted Price': [f"${clicked_listing.get('predicted_price', 0):.2f}"] + [f"${p:.2f}" for p in similar_listings['predicted_price']],
-                            'p_location': [f"${clicked_listing.get('p_location', 0):.4f}"] + [f"${p:.4f}" for p in similar_listings['p_location']],
-                            'p_size_capacity': [f"${clicked_listing.get('p_size_capacity', 0):.4f}"] + [f"${p:.4f}" for p in similar_listings['p_size_capacity']],
-                            'p_quality': [f"${clicked_listing.get('p_quality', 0):.4f}"] + [f"${p:.4f}" for p in similar_listings['p_quality']],
-                            'p_amenities': [f"${clicked_listing.get('p_amenities', 0):.4f}"] + [f"${p:.4f}" for p in similar_listings['p_amenities']],
-                            'p_description': [f"${clicked_listing.get('p_description', 0):.4f}"] + [f"${p:.4f}" for p in similar_listings['p_description']],
-                            'p_seasonality': [f"${clicked_listing.get('p_seasonality', 0):.4f}"] + [f"${p:.4f}" for p in similar_listings['p_seasonality']],
-                            'p_base': [f"${clicked_listing.get('p_base', 0):.4f}"] + [f"${p:.4f}" for p in similar_listings['p_base']],
+                            'Neighborhood Average': [f"${np.exp(clicked_listing.get('neighborhood_log_mean', 0)):.4f}"] + [f"${np.exp(p):.4f}" for p in similar_listings['neighborhood_log_mean']],
+                            'Location Contribution': [f"${(np.exp(clicked_listing.get('p_location', 0)+clicked_listing.get('neighborhood_log_mean', 0))-np.exp(clicked_listing.get('neighborhood_log_mean', 0))):.4f}"] + [f"${(np.exp(p+q)-np.exp(q)):.4f}" for p, q in zip(similar_listings['p_location'], similar_listings['neighborhood_log_mean'])],
+                            'Size Capacity Contribution': [f"${(np.exp(clicked_listing.get('p_size_capacity', 0)+clicked_listing.get('neighborhood_log_mean', 0))-np.exp(clicked_listing.get('neighborhood_log_mean', 0))):.4f}"] + [f"${(np.exp(p+q)-np.exp(q)):.4f}" for p, q in zip(similar_listings['p_size_capacity'], similar_listings['neighborhood_log_mean'])],
+                            'Quality Contribution': [f"${(np.exp(clicked_listing.get('p_quality', 0)+clicked_listing.get('neighborhood_log_mean', 0))-np.exp(clicked_listing.get('neighborhood_log_mean', 0))):.4f}"] + [f"${(np.exp(p+q)-np.exp(q)):.4f}" for p, q in zip(similar_listings['p_quality'], similar_listings['neighborhood_log_mean'])],
+                            'Amenities Contribution': [f"${(np.exp(clicked_listing.get('p_amenities', 0)+clicked_listing.get('neighborhood_log_mean', 0))-np.exp(clicked_listing.get('neighborhood_log_mean', 0))):.4f}"] + [f"${(np.exp(p+q)-np.exp(q)):.4f}" for p, q in zip(similar_listings['p_amenities'], similar_listings['neighborhood_log_mean'])],
+                            'Description Contribution': [f"${(np.exp(clicked_listing.get('p_description', 0)+clicked_listing.get('neighborhood_log_mean', 0))-np.exp(clicked_listing.get('neighborhood_log_mean', 0))):.4f}"] + [f"${(np.exp(p+q)-np.exp(q)):.4f}" for p, q in zip(similar_listings['p_description'], similar_listings['neighborhood_log_mean'])],
+                            'Seasonality Contribution': [f"${(np.exp(clicked_listing.get('p_seasonality', 0)+clicked_listing.get('neighborhood_log_mean', 0))-np.exp(clicked_listing.get('neighborhood_log_mean', 0))):.4f}"] + [f"${(np.exp(p+q)-np.exp(q)):.4f}" for p, q in zip(similar_listings['p_seasonality'], similar_listings['neighborhood_log_mean'])],
                         }
                         
                         comparison_df = pd.DataFrame(comparison_data)
