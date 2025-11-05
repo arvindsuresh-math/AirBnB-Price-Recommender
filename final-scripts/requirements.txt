@@ -1,0 +1,13 @@
+pandas
+pyarrow
+sentence-transformers
+scikit-learn
+torch
+tqdm
+transformers
+matplotlib
+seaborn
+altair
+folium
+streamlit
+streamlit-folium
