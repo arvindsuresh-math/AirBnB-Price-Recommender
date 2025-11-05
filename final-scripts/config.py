@@ -36,7 +36,7 @@ config = {
     "HIDDEN_LAYERS_SEASONALITY": [16],
 
     # --- Early Stopping & Scheduler ---
-    "EARLY_STOPPING_PATIENCE": 5,
+    "EARLY_STOPPING_PATIENCE": 3,
     "EARLY_STOPPING_MIN_DELTA": 0.0, 
     "SCHEDULER_PATIENCE": 2,
     "SCHEDULER_FACTOR": 0.5,

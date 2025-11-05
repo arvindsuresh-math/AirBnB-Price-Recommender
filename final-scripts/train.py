@@ -31,27 +31,28 @@ def evaluate_model(model, data_loader, device: str) -> Tuple[float, float]:
             total_mape += mape.item()
     return total_loss / len(data_loader), total_mape / len(data_loader)
 
+
 def train_model(model, train_loader, val_loader, optimizer, scheduler, config: dict):
     """
     Main function to train a model with a custom early stopping criterion.
-
-    The "best" model is defined by two conditions:
-    1. Constraint: The MAPE Gap (Val MAPE - Train MAPE) must be less than 4%.
-    2. Optimization: Among all models satisfying the constraint, find the one
-       with the lowest Train MAPE.
-
-    Patience-based early stopping only begins once the 4% gap threshold is breached.
+    Uses a city-and-model unique temporary filename to prevent all state conflicts.
     """
     history = []
-    # --- CHANGE 1: Track the best valid train MAPE and its corresponding gap ---
-    best_valid_train_mape = float('inf')
-    best_model_gap = float('inf')
+    best_valid_train_mape, best_model_gap = float('inf'), float('inf')
     patience_counter = 0
     scaler = torch.amp.GradScaler(enabled=(config['DEVICE'] == "cuda"))
     start_time = time.time()
-    temp_model_path = "temp_best_model.pt"
+    
+    # --- THE FIX: Create a unique temporary path for each city AND model class ---
+    model_class_name = model.__class__.__name__
+    city_name = config['CITY']
+    temp_model_path = f"temp_best_{city_name}_{model_class_name}.pt"
+    
+    # Defensive cleanup of any old temp files for this specific combo
+    if os.path.exists(temp_model_path):
+        os.remove(temp_model_path)
 
-    print("\n--- Starting Model Training (Optimizing for Min Train MAPE with <4% Gap) ---")
+    print(f"\n--- Starting Training for {model_class_name} on {city_name.upper()} ---")
     header = f"{'Epoch':>5} | {'Time':>8} | {'Train RMSE':>12} | {'Train MAPE (%)':>14} | {'Val RMSE':>10} | {'Val MAPE (%)':>12} | {'MAPE Gap (%)':>12} | {'Patience':>8}"
     print(header); print("-" * len(header))
 
@@ -61,7 +62,6 @@ def train_model(model, train_loader, val_loader, optimizer, scheduler, config: d
         
         progress_bar = tqdm(train_loader, desc=f"Epoch {epoch+1}/{config['N_EPOCHS']}", leave=False)
         for batch in progress_bar:
-            # ... (forward pass logic is the same) ...
             for k, v in batch.items():
                 if isinstance(v, torch.Tensor): batch[k] = v.to(config['DEVICE'])
                 else: batch[k] = {sk: sv.to(config['DEVICE']) for sk, sv in v.items()}
@@ -84,19 +84,13 @@ def train_model(model, train_loader, val_loader, optimizer, scheduler, config: d
         elapsed_time = time.strftime('%H:%M:%S', time.gmtime(time.time() - start_time))
         mape_gap = val_mape - train_mape
         
-        # --- CHANGE 2: Implement the new two-part model selection logic ---
-        # Condition 1: Check if the model is valid (gap is below threshold)
         if mape_gap < 0.04:
-            # If valid, reset patience
             patience_counter = 0
-            
-            # Condition 2: Check if this valid model is the best one so far
             if train_mape < best_valid_train_mape:
                 best_valid_train_mape = train_mape
                 best_model_gap = mape_gap
                 torch.save(model.state_dict(), temp_model_path)
         else:
-            # If the model is invalid (gap is too high), start or increment patience
             patience_counter += 1
 
         print(f"{epoch+1:>5} | {elapsed_time:>8} | {train_rmse:>12.4f} | {train_mape*100:>14.2f} | {val_rmse:>10.4f} | {val_mape*100:>12.2f} | {mape_gap*100:>12.2f} | {patience_counter:>8}")
@@ -108,19 +102,17 @@ def train_model(model, train_loader, val_loader, optimizer, scheduler, config: d
         
         scheduler.step(val_mape)
 
-        # Early stopping is now based only on patience
         if patience_counter >= config['EARLY_STOPPING_PATIENCE']:
             print(f"--- Early Stopping Triggered (MAPE Gap exceeded 4% for {patience_counter} epochs) ---")
             break
 
     print("\n--- Training Complete ---")
     if os.path.exists(temp_model_path):
-        # --- CHANGE 3: The final printout now reports the metrics of the best valid model ---
         print(f"Loading best model state from file with Train MAPE: {best_valid_train_mape*100:.2f}% (and MAPE Gap: {best_model_gap*100:.2f}%)")
         model.load_state_dict(torch.load(temp_model_path))
         os.remove(temp_model_path)
     else:
-        print("Warning: No model was saved. The MAPE gap may have exceeded 4% on the first epoch.")
+        print("Warning: No model was saved. The MAPE gap may have exceeded 4% on every epoch.")
         
     return model, pd.DataFrame(history)
 
