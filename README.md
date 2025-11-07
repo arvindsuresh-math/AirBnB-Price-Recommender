@@ -14,6 +14,11 @@ The primary goal is to predict Airbnb prices accurately while providing clear, e
 
 The final additive model powers an interactive Streamlit application that not only predicts prices but also allows users to understand the impact of each feature axis and find comparable listings based on multi-faceted similarity.
 
+## Key Performance Indicators
+
+1. **MAPE** (Mean-absolute percentage error)
+2. **RMSE** (Root-mean square error)
+
 ## 📊 Data Pipeline
 
 The project utilizes detailed monthly snapshots of Airbnb listings and reviews from the Inside Airbnb project. A rigorous ETL pipeline, detailed in `notebooks/data_cleaning.ipynb`, transforms this raw data into a model-ready panel dataset.
