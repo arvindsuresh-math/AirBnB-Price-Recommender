@@ -1,4 +1,6 @@
-# Airbnb Price Prediction with an Interpretable Deep Learning Model
+# Airbnb Price Recommender
+
+## An Interpretable Deep Learning Approach to Price Recommendation
 
 This project delivers a comprehensive deep learning solution for predicting Airbnb listing prices, featuring an interpretable neural network that decomposes price drivers into understandable components. The end-to-end pipeline covers data processing, model training, performance evaluation, and a Streamlit web application for interactive price exploration and competitor analysis.
 
@@ -127,7 +129,7 @@ The tables below summarize the best validation performance achieved by each mode
 
 | Model | Validation MAPE (%) | Validation RMSE |
 | :--- | :---: | :---: |
-| Random Forest Baseline | 29.40% | N/A |
+| Random Forest Baseline | 29.40% | 115.06 |
 | Deep Learning Baseline | 27.89% | 0.3305 |
 | **Interpretable Additive Model** | **27.30%** | **0.3449** |
 
@@ -135,7 +137,7 @@ The tables below summarize the best validation performance achieved by each mode
 
 | Model | Validation MAPE (%) | Validation RMSE |
 | :--- | :---: | :---: |
-| Random Forest Baseline | 31.08% | N/A |
+| Random Forest Baseline | 31.08% | 87.61 |
 | **Deep Learning Baseline** | **26.71%** | **0.3319** |
 | Interpretable Additive Model | 28.91% | 0.3440 |
 
