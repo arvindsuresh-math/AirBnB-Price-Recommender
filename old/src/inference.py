@@ -5,7 +5,7 @@ Contains functions for running inference with the trained model.
 """
 import torch
 from tqdm.notebook import tqdm
-from model import AdditiveAxisModel
+from app.src.model import AdditiveAxisModel
 
 
 def run_inference_with_details(model: AdditiveAxisModel, data_loader: torch.utils.data.DataLoader, device: str) -> dict:

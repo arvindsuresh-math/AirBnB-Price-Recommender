@@ -119,7 +119,7 @@ def train_model(model, train_loader, val_loader, optimizer, scheduler, config: d
 
 def run_ablation_experiment(exclude_axes: list, config: dict, processor, train_loader, val_loader):
     """High-level wrapper to run a single ablation study experiment."""
-    from model import AblationAdditiveModel
+    from app.src.model import AblationAdditiveModel
     
     print("\n" + "="*70)
     print(f"  STARTING ABLATION EXPERIMENT: EXCLUDING {exclude_axes}")

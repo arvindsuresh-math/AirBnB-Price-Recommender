@@ -20,7 +20,7 @@ from torch.utils.data import DataLoader
 from sklearn.model_selection import train_test_split
 from transformers import AutoTokenizer
 
-from model import AirbnbPriceDataset
+from app.src.model import AirbnbPriceDataset
 from typing import Tuple, Dict, List, Set
 
 

@@ -18,8 +18,8 @@ import torch
 import torch.optim as optim
 from tqdm.notebook import tqdm
 
-from model import AdditiveAxisModel
-from data_processing import load_and_split_data, FeatureProcessor, create_dataloaders
+from app.src.model import AdditiveAxisModel
+from app.src.data_processing import load_and_split_data, FeatureProcessor, create_dataloaders
 from typing import Tuple, Dict
 
 

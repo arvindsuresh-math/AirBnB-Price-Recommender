@@ -9,9 +9,9 @@ import torch
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
 
-from app.src.data_processing import FeatureProcessor
-from app.src.model import AdditiveModel, AirbnbPriceDataset
-from app.src.inference import run_inference_with_details
+from data_processing import FeatureProcessor
+from model import AdditiveModel, AirbnbPriceDataset
+from inference import run_inference_with_details
 
 def create_full_panel_dataset(df: pd.DataFrame, train_ids: set, val_ids: set) -> pd.DataFrame:
     """Augments the dataset to create a full panel for every listing and every month."""

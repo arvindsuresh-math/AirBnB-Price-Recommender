@@ -16,9 +16,9 @@ import torch
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
 
-from data_processing import create_full_panel_dataset, FeatureProcessor
-from model import AirbnbPriceDataset
-from inference import run_inference_with_details
+from app.src.data_processing import create_full_panel_dataset, FeatureProcessor
+from app.src.model import AirbnbPriceDataset
+from app.src.inference import run_inference_with_details
 from typing import Dict, Any
 
 

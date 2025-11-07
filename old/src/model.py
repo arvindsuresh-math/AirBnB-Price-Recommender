@@ -20,7 +20,7 @@ from collections import defaultdict
 # Forward-referencing the type hint for FeatureProcessor
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from data_processing import FeatureProcessor
+    from app.src.data_processing import FeatureProcessor
 
 
 class AirbnbPriceDataset(Dataset):

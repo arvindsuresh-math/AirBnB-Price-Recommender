@@ -20,102 +20,8 @@ import torch.serialization  # For loading saved models
 import __main__  # For accessing the main module
 from scipy.spatial.distance import cdist  # For calculating distances between vectors
 
-# ========================================================================================
-# HELPER FUNCTIONS: DISTANCES AND AXIS-IMPORTANCE
-# ========================================================================================
-# This defines the core utility functions for the search algorithm. 
-# It includes a function for calculating Haversine distance (for geospatial filtering), 
-# functions for computing vector distances (Euclidean and Cosine), 
-# and a function to calculate the personalized axis-importance weights for a given listing, 
-# which now supports excluding certain axes from the calculation.
-
-def haversine_distance(latlon1_rad, latlon2_rad):
-    """Calculates the Haversine distance between one or more points in radians."""
-    dlon = latlon2_rad[:, 1] - latlon1_rad[1]
-    dlat = latlon2_rad[:, 0] - latlon1_rad[0]
-    a = np.sin(dlat / 2.0)**2 + np.cos(latlon1_rad[0]) * np.cos(latlon2_rad[:, 0]) * np.sin(dlon / 2.0)**2
-    c = 2 * np.arcsin(np.sqrt(a))
-    return 3959 * c # Earth radius in miles
-
-def calculate_axis_importances(p_contributions_single_listing: dict, exclude_axes: list = None) -> dict:
-    """
-    Calculates the normalized weights for each axis based on the absolute
-    magnitude of its price contribution, excluding specified axes.
-    """
-    exclude_axes = exclude_axes or []
-    filtered_contributions = {k: v for k, v in p_contributions_single_listing.items() if k not in exclude_axes}
-
-    abs_contributions = {k: abs(v) for k, v in filtered_contributions.items()}
-    total_abs_contribution = sum(abs_contributions.values())
-
-    if total_abs_contribution == 0:
-        return {k: 1.0 / len(abs_contributions) for k in abs_contributions}
-
-    return {k: v / total_abs_contribution for k, v in abs_contributions.items()}
-
-def euclidean_distance(vector, matrix):
-    """Calculates the Euclidean distance from a vector to all rows in a matrix."""
-    return cdist(vector.reshape(1, -1), matrix, 'euclidean').flatten()
-
-def cosine_distance(vector, matrix):
-    """Calculates the Cosine distance from a vector to all rows in a matrix."""
-    return cdist(vector.reshape(1, -1), matrix, 'cosine').flatten()
-
-# ========================================================================================
-# MAIN SEARCH FUNCTION
-# ========================================================================================
-# This is the main search function. 
-# It first identifies a candidate pool of listings within a 2-mile radius of the query listing.
-# Then, it calculates a weighted similarity score across all other feature axes 
-# (e.g., quality, size, description) to find the most relevantly similar listings within that geographic area.
-
-def find_nearest_neighbors(query_idx: int, top_k: int = 5, radius_miles: float = 2.0):
-    """
-    Finds the top K nearest neighbors for a listing within a geographic radius,
-    explicitly excluding other instances of the same listing (e.g., from
-    different months).
-    """
-    # 1. Geospatial Filtering: Create the initial candidate pool
-    query_lat_lon_rad = lat_lon_rad[query_idx]
-    distances_miles = haversine_distance(query_lat_lon_rad, lat_lon_rad)
-    candidate_indices = np.where((distances_miles > 0) & (distances_miles <= radius_miles))[0]
-
-    # ---: Filter out listings with the same ID as the query ---
-    query_id = listing_ids[query_idx]
-    candidate_ids = listing_ids[candidate_indices]
-    mask = (candidate_ids != query_id)
-    candidate_indices = candidate_indices[mask]
-    
-
-    if len(candidate_indices) < top_k:
-        print(f"Warning: Found only {len(candidate_indices)} unique candidates within {radius_miles} miles.")
-        top_k = len(candidate_indices)
-        if top_k == 0: return [], {}
-
-    # 2. Calculate Axis-Importance Weights (excluding location)
-    query_contributions = {name: p_vec[query_idx] for name, p_vec in price_contributions.items()}
-    weights = calculate_axis_importances(query_contributions, exclude_axes=['location'])
-
-    # 3. Calculate and combine weighted distances for the filtered candidates
-    final_scores = np.zeros(len(candidate_indices))
-    search_axes = [axis for axis in hidden_states.keys() if axis != 'location']
-
-    for axis in search_axes:
-        h_matrix = hidden_states[axis]
-        query_h_vector = h_matrix[query_idx]
-        candidate_h_matrix = h_matrix[candidate_indices]
-
-        dist_func = cosine_distance if axis in ["amenities", "description"] else euclidean_distance
-        raw_dists = dist_func(query_h_vector, candidate_h_matrix)
-
-        min_dist, max_dist = raw_dists.min(), raw_dists.max()
-        normalized_dists = (raw_dists - min_dist) / (max_dist - min_dist) if max_dist > min_dist else np.zeros_like(raw_dists)
-        final_scores += weights.get(axis, 0) * normalized_dists
-
-    # 4. Find and return the top_k results
-    nearest_candidate_indices = np.argsort(final_scores)
-    nearest_original_indices = candidate_indices[nearest_candidate_indices]
-    return nearest_original_indices[:top_k], weights
+# Helper functions for finding nearest neighbors
+from similarity import haversine_distance, calculate_axis_importances, euclidean_distance, cosine_distance, find_nearest_neighbors
 
 # Retrieves the neighborhood_log_mean for a given neighborhood name.
 def get_neighborhood_log_mean(neighborhood_name: str, neighborhood_df: pd.DataFrame) -> float:
@@ -513,7 +419,7 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
     )
     # --- ANALYSIS SECTION ---
     # This section handles when users click on map markers to get detailed analysis
-    st.header("📊 Analysis")
+    st.header("Analysis")
     
     # Check if the user clicked on something in the map
     if st_data and st_data.get("last_object_clicked"):
@@ -564,7 +470,7 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
                     contrib_data.append({
                         'Factor': axis.replace('_', ' ').title(),
                         #'Log Contribution': f"{value:.4f}",
-                        'Price Adjustment': f"{percentage_adjustment:.4f}%"
+                        'Price Adjustment': f"{percentage_adjustment:.2f}%"
                     })
                 contrib_df = pd.DataFrame(contrib_data)
                 st.dataframe(contrib_df, use_container_width=True, hide_index=True)
@@ -573,8 +479,10 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
                 st.subheader("🔍 Similar Properties Nearby")
                 
                 try:
-                    neighbor_indices, weights = find_nearest_neighbors(clicked_idx, top_k=5, radius_miles=2.0)
-                    
+                    neighbor_indices, weights = find_nearest_neighbors(clicked_idx, all_listing_ids=listings_df['id'],
+                                                                        lat_lon_rad=lat_lon_rad, price_contributions=price_contributions,
+                                                                        hidden_states=hidden_states, top_k=5, radius_miles=2.0)
+
                     if len(neighbor_indices) > 0:
                         # Show why these are similar
                         ###st.write("**Similarity factors (how we matched):**")
