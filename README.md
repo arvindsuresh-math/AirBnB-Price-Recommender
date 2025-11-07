@@ -134,7 +134,7 @@ The tables below summarize the best validation performance achieved by each mode
 
 | Model | Validation MAPE (%) | Validation RMSE |
 | :--- | :---: | :---: |
-| Random Forest Baseline | 29.40% | 115.06 |
+| Random Forest Baseline | 29.40% | 0.3676 |
 | Deep Learning Baseline | 27.89% | 0.3305 |
 | **Interpretable Additive Model** | **27.30%** | **0.3449** |
 
@@ -142,7 +142,7 @@ The tables below summarize the best validation performance achieved by each mode
 
 | Model | Validation MAPE (%) | Validation RMSE |
 | :--- | :---: | :---: |
-| Random Forest Baseline | 31.08% | 87.61 |
+| Random Forest Baseline | 31.08% | 0.3625 |
 | **Deep Learning Baseline** | **26.71%** | **0.3319** |
 | Interpretable Additive Model | 28.91% | 0.3440 |
 
