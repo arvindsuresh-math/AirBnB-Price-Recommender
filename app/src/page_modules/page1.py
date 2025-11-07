@@ -511,9 +511,9 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
         width='100%',         # Take full width of the container
         height=700           # Fixed height in pixels
     )
-    # --- AI ANALYSIS SECTION ---
-    # This section handles when users click on map markers to get detailed AI analysis
-    st.header("📊 AI Analysis")
+    # --- ANALYSIS SECTION ---
+    # This section handles when users click on map markers to get detailed analysis
+    st.header("📊 Analysis")
     
     # Check if the user clicked on something in the map
     if st_data and st_data.get("last_object_clicked"):
@@ -546,6 +546,29 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
                 # Get the index in the full dataset for similarity search
                 clicked_idx = listings_df[listings_df['id'] == clicked_listing['id']].index[0]
                 
+                # --- PRICE CONTRIBUTION BREAKDOWN ---
+                # Extract price contributions
+                p_contributions = {
+                    'location': clicked_listing['p_location'],
+                    'size_capacity': clicked_listing['p_size_capacity'],
+                    'quality': clicked_listing['p_quality'],
+                    'amenities': clicked_listing['p_amenities'],
+                    'description': clicked_listing['p_description'],
+                    'seasonality': clicked_listing['p_seasonality'],
+                }
+
+                st.subheader("📊 Price Contribution Breakdown")
+                contrib_data = []
+                for axis, value in p_contributions.items():
+                    percentage_adjustment = (np.exp(value)-1)*100
+                    contrib_data.append({
+                        'Factor': axis.replace('_', ' ').title(),
+                        #'Log Contribution': f"{value:.4f}",
+                        'Price Adjustment': f"{percentage_adjustment:.4f}%"
+                    })
+                contrib_df = pd.DataFrame(contrib_data)
+                st.dataframe(contrib_df, use_container_width=True, hide_index=True)
+
                 # --- FIND SIMILAR LISTINGS ---
                 st.subheader("🔍 Similar Properties Nearby")
                 
@@ -554,10 +577,10 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
                     
                     if len(neighbor_indices) > 0:
                         # Show why these are similar
-                        st.write("**Similarity factors (how we matched):**")
-                        sorted_weights = sorted(weights.items(), key=lambda x: x[1], reverse=True)
-                        for axis, weight in sorted_weights:
-                            st.write(f"- {axis.replace('_', ' ').title()}: {weight:.1%}")
+                        ###st.write("**Similarity factors (how we matched):**")
+                        ###sorted_weights = sorted(weights.items(), key=lambda x: x[1], reverse=True)
+                        ###for axis, weight in sorted_weights:
+                        ###    st.write(f"- {axis.replace('_', ' ').title()}: {weight:.1%}")
                         
                         # Display similar listings
                         st.write(f"\n**Top {len(neighbor_indices)} similar listings:**")
@@ -572,7 +595,7 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
                             'Accommodates': [clicked_listing.get('accommodates', 0)] + similar_listings['accommodates'].tolist(),
                             'Bedrooms': [clicked_listing.get('bedrooms', 0)] + similar_listings['bedrooms'].tolist(),
                             'Price': [f"${clicked_listing.get('price', 0):.2f}"] + [f"${p:.2f}" for p in similar_listings['price']],
-                            'Predicted Price': [f"${clicked_listing.get('predicted_price', 0):.2f}"] + [f"${p:.2f}" for p in similar_listings['predicted_price']],
+                            #'Predicted Price': [f"${clicked_listing.get('predicted_price', 0):.2f}"] + [f"${p:.2f}" for p in similar_listings['predicted_price']],
                             'Neighborhood Average': [f"${np.exp(clicked_listing.get('neighborhood_log_mean', 0)):.2f}"] + [f"${np.exp(p):.2f}" for p in similar_listings['neighborhood_log_mean']],
                             'Location % Adjustment': [f"{(np.exp(clicked_listing.get('p_location', 0))-1)*100:.4f}%"] + [f"{(np.exp(p)-1)*100:.4f}%" for p in similar_listings['p_location']],
                             'Size Capacity % Adjustment': [f"{(np.exp(clicked_listing.get('p_size_capacity', 0))-1)*100:.4f}%"] + [f"{(np.exp(p)-1)*100:.4f}%" for p in similar_listings['p_size_capacity']],
@@ -609,10 +632,10 @@ if st.session_state["show_listings"] and st.session_state["neighbourhoods"] and 
         st.write("Click a marker on the map to view listing details and find similar properties.")
 
 # --- FEATURE TRENDS OVER TIME SECTION ---
-# This section shows how different features of a listing change across months
+# This section shows how the price of a listing changes across months
 if st.session_state["show_listings"] and st_data and st_data.get("last_object_clicked"):
     if 'lat' in clicked_data and 'lng' in clicked_data:
-        st.header("📈 Feature Trends Over Time")
+        st.header("📈 Price Trends Over Time")
         
         # Get all instances of this listing across different months
         listing_id = clicked_listing['id']
@@ -623,84 +646,49 @@ if st.session_state["show_listings"] and st_data and st_data.get("last_object_cl
             # Sort by month for proper time series display
             listing_history = listing_history.sort_values('month')
             
-            # Transform p_* columns to percentage adjustments
-            p_columns = ['p_location', 'p_size_capacity', 'p_quality', 'p_amenities', 'p_description', 'p_seasonality']
-            for col in p_columns:
-                if col in listing_history.columns:
-                    listing_history[f'{col}_pct'] = (np.exp(listing_history[col]) - 1) * 100
+            # Prepare data for plotting
+            chart_data = listing_history[['month', 'price']].dropna()
             
-            # Define available features to plot
-            available_features = {
-                'price': 'Price ($)',
-                #'predicted_price': 'Predicted Price ($)',
-                'accommodates': 'Accommodates',
-                'bedrooms': 'Bedrooms',
-                'p_location_pct': 'Location Adjustment (%)',
-                'p_size_capacity_pct': 'Size/Capacity Adjustment (%)',
-                'p_quality_pct': 'Quality Adjustment (%)',
-                'p_amenities_pct': 'Amenities Adjustment (%)',
-                'p_description_pct': 'Description Adjustment (%)',
-                'p_seasonality_pct': 'Seasonality Adjustment (%)',
-            }
-            
-            # Filter to only features that exist in the dataset
-            available_features = {k: v for k, v in available_features.items() if k in listing_history.columns}
-            
-            # Feature selector
-            selected_feature = st.selectbox(
-                "Select feature to visualize",
-                options=list(available_features.keys()),
-                format_func=lambda x: available_features[x],
-                index=0  # Default to 'price'
-            )
-            
-            # Create the line chart
-            if selected_feature in listing_history.columns:
-                # Prepare data for plotting
-                chart_data = listing_history[['month', selected_feature]].dropna()
+            if not chart_data.empty:
+                # Create Altair chart
+                chart = alt.Chart(chart_data).mark_line(point=True).encode(
+                    x=alt.X('month:Q', 
+                            title='Month',
+                            axis=alt.Axis(format='d')),
+                    y=alt.Y('price:Q', 
+                            title='Price ($)'),
+                    tooltip=[
+                        alt.Tooltip('month:Q', title='Month'),
+                        alt.Tooltip('price:Q', 
+                                   title='Price ($)',
+                                   format='$.2f')
+                    ]
+                ).properties(
+                    width='container',
+                    height=400,
+                    title=f'Price Over Time for: {clicked_listing.get("name", "Selected Listing")}'
+                ).interactive()
                 
-                if not chart_data.empty:
-                    # Create Altair chart
-                    chart = alt.Chart(chart_data).mark_line(point=True).encode(
-                        x=alt.X('month:Q', 
-                                title='Month',
-                                axis=alt.Axis(format='d')),
-                        y=alt.Y(f'{selected_feature}:Q', 
-                                title=available_features[selected_feature]),
-                        tooltip=[
-                            alt.Tooltip('month:Q', title='Month'),
-                            alt.Tooltip(f'{selected_feature}:Q', 
-                                       title=available_features[selected_feature],
-                                       format='.2f')
-                        ]
-                    ).properties(
-                        width='container',
-                        height=400,
-                        title=f'{available_features[selected_feature]} Over Time for: {clicked_listing.get("name", "Selected Listing")}'
-                    ).interactive()
-                    
-                    st.altair_chart(chart, use_container_width=True)
-                    
-                    # Show summary statistics
-                    st.subheader("Summary Statistics")
-                    col1, col2, col3, col4 = st.columns(4)
-                    
-                    feature_values = chart_data[selected_feature]
-                    with col1:
-                        st.metric("Mean", f"{feature_values.mean():.2f}")
-                    with col2:
-                        st.metric("Min", f"{feature_values.min():.2f}")
-                    with col3:
-                        st.metric("Max", f"{feature_values.max():.2f}")
-                    with col4:
-                        st.metric("Std Dev", f"{feature_values.std():.2f}")
-                    
-                else:
-                    st.warning(f"No data available for {available_features[selected_feature]} across months.")
+                st.altair_chart(chart, use_container_width=True)
+                
+                # Show summary statistics
+                st.subheader("Summary Statistics")
+                col1, col2, col3, col4 = st.columns(4)
+                
+                price_values = chart_data['price']
+                with col1:
+                    st.metric("Average Price", f"${price_values.mean():.2f}")
+                with col2:
+                    st.metric("Lowest Price", f"${price_values.min():.2f}")
+                with col3:
+                    st.metric("Highest Price", f"${price_values.max():.2f}")
+                with col4:
+                    st.metric("Price Variation", f"${price_values.std():.2f}")
+                
             else:
-                st.error(f"Selected feature '{selected_feature}' not found in the dataset.")
+                st.warning("No price data available across months for this listing.")
         else:
-            st.info("Month data not available for this listing. Feature trends over time cannot be displayed.")
+            st.info("Month data not available for this listing. Price trends over time cannot be displayed.")
 
 # ========================================================================================
 # END OF APPLICATION

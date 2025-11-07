@@ -5,6 +5,7 @@ import streamlit as st  # The main web app framework
 import pandas as pd  # For working with data tables (DataFrames)
 import folium  # For creating interactive maps
 import json  # For reading JSON files (like map data)
+import plotly.graph_objects as go  # For creating interactive plotly charts
 
 # Machine Learning and AI libraries
 import torch  # PyTorch - for deep learning models
@@ -335,7 +336,7 @@ def find_nearest_neighbors_temp(query_idx: int, temp_hidden_states: dict, temp_p
 # --- App Configuration ---
 # Configure the Streamlit page layout and title
 # NOTE: st.set_page_config is now in the main streamlit_app.py file
-st.title("🏙️ Airbnb Price Navigator")  # Main heading shown at the top of the page
+st.title("🏙️ Airbnb Price Recommender")  # Main heading shown at the top of the page
 
 # Register classes in __main__ for unpickling
 __main__.FeatureProcessor = FeatureProcessor
@@ -515,8 +516,8 @@ with st.form("new_listing_form"):
         input_month = st.selectbox("Month", options=list(range(1, 13)), index=9)  # Default to October (10th month, index 9)
         input_host_superhost = st.checkbox("Host is Superhost", value=True)
         input_instant_bookable = st.checkbox("Instant Bookable", value=True)
-    
-    submit_button = st.form_submit_button("🔮 Predict Price & Find Similar Listings")
+
+    submit_button = st.form_submit_button("Recommend Price & Find Similar Listings")
 
 if submit_button:
     # Create the estimate listing DataFrame
@@ -557,7 +558,7 @@ if submit_button:
     })
     
     try:
-        with st.spinner("Processing listing and making predictions..."):
+        with st.spinner("Processing listing and making recommendations..."):
             # 1. Transform the new listing data using the fitted processor
             processed_features = processor.transform(estimate_listing_data, neighborhood_dict)
             
@@ -672,12 +673,12 @@ if submit_button:
             neighbor_indices_original = neighbor_indices - 1
             
             # 8. Display results
-            st.success("✅ Prediction Complete!")
+            st.success("✅ Recommendation Complete!")
             
-            st.subheader("💰 Predicted Price")
+            st.subheader("💰 Recommended Price")
             col1, col2, col3 = st.columns(3)
             with col1:
-                st.metric("Predicted Price", f"${predicted_price:.2f}")
+                st.metric("Recommended Price", f"${predicted_price:.2f}")
             with col2:
                 st.metric("Neighborhood Average", f"${np.exp(neighborhood_log_mean_val):.2f}")
             with col3:
@@ -690,11 +691,40 @@ if submit_button:
                 percentage_adjustment = (np.exp(value)-1)*100
                 contrib_data.append({
                     'Factor': axis.replace('_', ' ').title(),
-                    'Log Contribution': f"{value:.4f}",
+                    #'Log Contribution': f"{value:.4f}",
                     'Price Adjustment': f"{percentage_adjustment:.4f}%"
                 })
             contrib_df = pd.DataFrame(contrib_data)
             st.dataframe(contrib_df, use_container_width=True, hide_index=True)
+            
+            # Waterfall Plot for Price Adjustments
+            st.subheader("💧 Price Adjustment Waterfall")
+            
+            # Calculate adjustments from contributions
+            base_price = np.exp(neighborhood_log_mean_val)
+            adjustments = [base_price]  # Start with base price
+            labels = ['Base Price (Neighborhood Avg)']
+            
+            for axis, value in p_contributions.items():
+                price_change = base_price * (np.exp(value) - 1)
+                adjustments.append(price_change)
+                labels.append(axis.replace('_', ' ').title())
+            
+            adjustments.append(predicted_price - base_price - sum(adjustments[1:]))  # Final adjustment
+            labels.append('Final Price')
+            
+            # Create waterfall chart
+            fig = go.Figure(go.Waterfall(
+                orientation="v",
+                measure=["absolute"] + ["relative"] * (len(adjustments) - 1) + ["total"],
+                x=labels,
+                y=adjustments,
+                text=[f"${val:.2f}" for val in adjustments],
+                textposition="outside"
+            ))
+            
+            fig.update_layout(title="Price Breakdown", showlegend=False)
+            st.plotly_chart(fig, use_container_width=True)
             
             # 9. Display similar listings
             if len(neighbor_indices_original) > 0:
@@ -704,7 +734,9 @@ if submit_button:
                 sorted_weights = sorted(weights.items(), key=lambda x: x[1], reverse=True)
                 for axis, weight in sorted_weights:
                     st.write(f"- {axis.replace('_', ' ').title()}: {weight:.1%}")
-                
+
+                st.markdown("We have determined the most similar listings based on your input listing's features. Here are some comparable properties within a 2-mile radius:")
+
                 st.write(f"\n**Top {len(neighbor_indices_original)} similar listings:**")
                 similar_listings = listings_df.loc[neighbor_indices_original]
                 
@@ -716,7 +748,7 @@ if submit_button:
                     'Accommodates': [input_accommodates] + similar_listings['accommodates'].tolist(),
                     'Bedrooms': [input_bedrooms] + similar_listings['bedrooms'].tolist(),
                     'Price': [f"${predicted_price:.2f}"] + [f"${p:.2f}" for p in similar_listings['price']],
-                    'Predicted Price': [f"${predicted_price:.2f}"] + [f"${p:.2f}" for p in similar_listings['predicted_price']],
+                    #'Predicted Price': [f"${predicted_price:.2f}"] + [f"${p:.2f}" for p in similar_listings['predicted_price']],
                 }
                 
                 comparison_df = pd.DataFrame(comparison_data)

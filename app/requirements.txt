@@ -1,18 +1,19 @@
 altair
 streamlit>=1.39
 folium>=0.17
-scikit-learn
-scipy
 streamlit-folium>=0.23
-huggingface_hub==0.35.3
-matplotlib==3.8.0
-numpy==1.26.4
-pandas==2.2.2
+plotly>=5.0.0
 pyarrow>=21.0.0
-scipy==1.12.0
-seaborn==0.13.2
-sentence_transformers==5.1.1
-scikit-learn==1.4.2
-torch>=2.0
-tqdm==4.67.1
-transformers==4.57.1
+# Core scientific packages - using flexible versions for better compatibility
+numpy>=1.24.0,<2.0.0
+pandas>=2.0.0
+scipy>=1.10.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+# ML/AI packages
+torch>=2.0.0
+transformers>=4.30.0
+sentence-transformers>=2.2.0
+huggingface_hub>=0.16.0
+tqdm>=4.65.0
