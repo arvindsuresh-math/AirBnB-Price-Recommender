@@ -1,0 +1,543 @@
+feature,importance
+accommodates,0.13132372865522884
+beds,0.06771678614547484
+bedrooms,0.06769351977253106
+room_type_Entire home/apt,0.036266628673070886
+bathrooms,0.03343303317717828
+property_type_Private room in rental unit,0.030817926881853565
+room_type_Private room,0.027881812650071506
+amenity_5,0.0253469670542616
+amenity_221,0.014101724316508872
+amenity_218,0.011996065515025321
+amenity_156,0.01187965642392803
+amenity_119,0.011311057884776836
+review_scores_cleanliness,0.010875726161635641
+amenity_214,0.010364775034519623
+amenity_188,0.009399346863744941
+amenity_189,0.009329048169499149
+amenity_146,0.009028279445284561
+amenity_254,0.00902661690184747
+review_scores_value,0.008649073139959843
+property_type_Entire rental unit,0.008359139126818738
+amenity_154,0.008318425888382858
+review_scores_location,0.008186381244492108
+review_scores_rating,0.008183142798549736
+amenity_104,0.007745453050157033
+amenity_225,0.007714634374758722
+amenity_194,0.0072182155978157345
+review_scores_communication,0.007151275508335286
+amenity_79,0.007016793742154675
+amenity_82,0.007005380180166158
+amenity_247,0.006937520888896907
+amenity_40,0.006936427585163654
+amenity_158,0.00690124482178698
+amenity_142,0.006799273995544699
+amenity_59,0.006636767388597405
+review_scores_checkin,0.006635737535483855
+amenity_85,0.006475641529403926
+amenity_246,0.006302111588946149
+amenity_212,0.006282063613943708
+amenity_80,0.006277985519636148
+amenity_178,0.005893704756639932
+amenity_128,0.005601549691011346
+amenity_93,0.005463540668767742
+amenity_133,0.0054633018469355385
+amenity_224,0.00540163746680662
+amenity_116,0.005310103397183684
+amenity_164,0.005118988125320591
+amenity_232,0.00501956646532986
+amenity_171,0.004802897808193571
+amenity_48,0.00458865074677267
+property_type_Entire home,0.004468558283663363
+amenity_62,0.004356781805973769
+amenity_205,0.004354186905688748
+amenity_193,0.0043343805960293445
+amenity_38,0.004331742389805899
+amenity_209,0.0043279374617137024
+amenity_89,0.004240334028194923
+amenity_129,0.004207055123800654
+property_type_Private room in home,0.004008846682697751
+amenity_88,0.003977102523742257
+amenity_91,0.003925588733268995
+property_type_Entire townhouse,0.003913080133459312
+amenity_148,0.0039031905379634034
+amenity_94,0.0039018363293685447
+amenity_4,0.0038188478637157784
+amenity_199,0.0037257447331653297
+amenity_24,0.0037015176632895653
+amenity_245,0.003650162623102974
+amenity_14,0.003611320464686513
+amenity_181,0.003492504488510387
+amenity_213,0.0034322245402109344
+amenity_111,0.003293476500070479
+amenity_109,0.003161218408452818
+amenity_162,0.003053812687052902
+amenity_229,0.0030073462050138923
+amenity_136,0.002884013241408111
+amenity_237,0.002784284814651294
+amenity_143,0.0027686625931543306
+amenity_75,0.0027121129399933935
+amenity_69,0.002635438687715045
+amenity_54,0.002502445681704739
+amenity_25,0.002469424319205895
+amenity_176,0.002431153461676179
+amenity_63,0.0024146989280036165
+amenity_18,0.002413211802063139
+amenity_198,0.0023404731047518518
+amenity_46,0.0023362856112454852
+amenity_53,0.002291708001079118
+amenity_248,0.0022583570543712713
+amenity_87,0.0021799223272541087
+amenity_211,0.002025735351012505
+amenity_77,0.0020215955482901383
+amenity_234,0.002014659808145923
+amenity_117,0.001991465291509306
+neighbourhood_cleansed_Hell's Kitchen,0.0019807916668502937
+amenity_203,0.0019721533855276345
+neighbourhood_cleansed_Harlem,0.001906282676403857
+amenity_124,0.0018780270800987909
+amenity_241,0.001873104718577572
+amenity_90,0.0018712734733364956
+amenity_74,0.0018318868273004758
+amenity_210,0.0017623244985011791
+amenity_37,0.0017620512010837392
+amenity_100,0.001754754470899754
+amenity_145,0.0017275227780064004
+amenity_113,0.001711976358823273
+property_type_Room in hotel,0.0016940316186583287
+amenity_49,0.0016668401291235965
+neighbourhood_cleansed_Upper East Side,0.0015963825102021916
+amenity_99,0.0015650066366976268
+amenity_182,0.001481115177582066
+property_type_Entire loft,0.0014758402172944148
+neighbourhood_cleansed_Bedford-Stuyvesant,0.001466568013227242
+amenity_30,0.001459144074250458
+amenity_226,0.0014496851450606029
+amenity_125,0.0014279737495468642
+amenity_68,0.0014273519330111515
+amenity_231,0.001420677993457631
+amenity_185,0.001408036746618463
+amenity_92,0.0013418447885468001
+neighbourhood_cleansed_Bushwick,0.0012929911727276807
+amenity_244,0.0012665108844257217
+property_type_Entire condo,0.0011966276160365345
+neighbourhood_cleansed_Midtown,0.0011963915370666548
+amenity_58,0.0011550995892500174
+amenity_115,0.0011459126939594184
+amenity_39,0.0011043579979710437
+amenity_72,0.001047875079537982
+amenity_131,0.0010417030432361683
+property_type_Private room in townhouse,0.0010048549702446384
+amenity_243,0.0009653602993628728
+amenity_98,0.000926309391705247
+amenity_44,0.000921021152966042
+amenity_144,0.000907885543965827
+amenity_217,0.0009031281008423914
+amenity_114,0.0008841608056339731
+amenity_157,0.0008642263034899343
+neighbourhood_cleansed_Crown Heights,0.0008421240647458176
+amenity_192,0.000822809368394003
+neighbourhood_cleansed_Williamsburg,0.000801385211102222
+amenity_19,0.0007910418122645372
+neighbourhood_cleansed_Washington Heights,0.0007789935706991381
+amenity_0,0.0007765598101913168
+neighbourhood_cleansed_Prospect Heights,0.0007432299044114292
+neighbourhood_cleansed_East Flatbush,0.0007328745763678309
+amenity_197,0.0007220617763269422
+amenity_60,0.0007197481721788933
+amenity_180,0.0006963523133700334
+neighbourhood_cleansed_Arverne,0.0006959147147071275
+amenity_167,0.0006828626616970883
+neighbourhood_cleansed_Upper West Side,0.0006790586809180504
+neighbourhood_cleansed_Greenpoint,0.0006733639637007261
+amenity_222,0.0006726300761890694
+amenity_195,0.0006645368275389162
+neighbourhood_cleansed_Chelsea,0.0006626740421611294
+room_type_Hotel room,0.0006603204591802019
+neighbourhood_cleansed_Sea Gate,0.0006500087437039834
+amenity_186,0.0006431351795985438
+amenity_103,0.0006079904761367714
+amenity_239,0.0006029725648187064
+neighbourhood_cleansed_West Village,0.000587431300549161
+property_type_Room in boutique hotel,0.0005873259715209778
+amenity_138,0.0005773191098929222
+neighbourhood_cleansed_Astoria,0.0005756476431318996
+amenity_36,0.000565713385894663
+neighbourhood_cleansed_Flatbush,0.0005505900503755212
+amenity_47,0.0005352050550178469
+amenity_235,0.0005301977597566219
+amenity_15,0.0005233642336283106
+amenity_41,0.000518192725480148
+property_type_Private room in condo,0.0005141366922563605
+neighbourhood_cleansed_East Village,0.0005105871905446512
+amenity_96,0.0005076212600016569
+property_type_Entire place,0.0005056991721621201
+amenity_86,0.0004934192817332684
+neighbourhood_cleansed_Gramercy,0.0004920397622739516
+amenity_95,0.0004841705948734835
+amenity_84,0.0004720634411393616
+amenity_191,0.0004695588810587454
+amenity_23,0.00046085722848313894
+amenity_16,0.00045920635353526474
+amenity_134,0.0004583882464070912
+neighbourhood_cleansed_Financial District,0.00045265091819702994
+neighbourhood_cleansed_Gowanus,0.0004521163648817026
+amenity_172,0.0004511955401070117
+amenity_151,0.00044369019188298406
+amenity_55,0.00044305706730769686
+amenity_174,0.00044123034547107495
+amenity_139,0.00043768607496534514
+neighbourhood_cleansed_Long Island City,0.0004349896968845966
+property_type_Entire serviced apartment,0.0004343112272428968
+amenity_253,0.00043028591946311603
+amenity_228,0.000429327677171865
+neighbourhood_cleansed_Carroll Gardens,0.0004246163433282236
+neighbourhood_cleansed_East Harlem,0.00041947188593685874
+amenity_249,0.00041032499776807926
+amenity_51,0.0004030667520298782
+neighbourhood_cleansed_Lower East Side,0.00040162364038638464
+neighbourhood_cleansed_Sunset Park,0.000399207026181498
+amenity_132,0.0003870014616135043
+amenity_64,0.00038267159056072923
+neighbourhood_cleansed_SoHo,0.00037416707351594524
+amenity_29,0.00036172687262046497
+amenity_76,0.00035877500205850563
+neighbourhood_cleansed_Greenwich Village,0.00034718163106074577
+neighbourhood_cleansed_East New York,0.0003358368065810297
+amenity_153,0.0003314144468298111
+amenity_61,0.0003307793204425929
+neighbourhood_cleansed_Woodhaven,0.00032912942949905167
+amenity_83,0.00032205822952811305
+neighbourhood_cleansed_Woodside,0.0003218640974017748
+room_type_Shared room,0.0003188078040807723
+neighbourhood_cleansed_Cypress Hills,0.0003178503950136142
+amenity_118,0.00031369053640163057
+neighbourhood_cleansed_Park Slope,0.00031116971952236457
+neighbourhood_cleansed_East Elmhurst,0.0003074595644591209
+amenity_20,0.000293342643976831
+neighbourhood_cleansed_Murray Hill,0.000290280933240763
+amenity_216,0.00028932678401987464
+neighbourhood_cleansed_Clinton Hill,0.00028234789708640984
+amenity_26,0.0002820806263570151
+amenity_149,0.00028192751546864033
+amenity_223,0.0002797744203319801
+amenity_10,0.000257581560457232
+neighbourhood_cleansed_Far Rockaway,0.00025629956580157826
+neighbourhood_cleansed_Theater District,0.0002535355552295695
+amenity_150,0.00025349018165389444
+property_type_Shared room in rental unit,0.00025318191030493815
+amenity_7,0.00025200412877394323
+amenity_238,0.00025067602687109744
+neighbourhood_cleansed_Elmhurst,0.0002480368398893222
+amenity_107,0.00024083266266352037
+neighbourhood_cleansed_Canarsie,0.00023918445534812239
+neighbourhood_cleansed_Bay Ridge,0.00023851506940526494
+neighbourhood_cleansed_Kips Bay,0.00023818267233411246
+amenity_190,0.000237442043140545
+amenity_12,0.00023713349708214687
+amenity_102,0.00023557289262529117
+amenity_155,0.00023307725411855833
+amenity_179,0.00023055978081790583
+neighbourhood_cleansed_Jamaica,0.00022709969179360016
+property_type_Entire guest suite,0.0002245230646377315
+neighbourhood_cleansed_Ditmars Steinway,0.00022176094847444446
+neighbourhood_cleansed_Flushing,0.00022174524416072912
+amenity_242,0.00021754972149487867
+neighbourhood_cleansed_Hunts Point,0.0002172354459897937
+neighbourhood_cleansed_Chinatown,0.00021623708421319453
+amenity_34,0.00021587423175534106
+amenity_56,0.00021582102640629023
+neighbourhood_cleansed_Ridgewood,0.0002120607458665233
+neighbourhood_cleansed_Prospect-Lefferts Gardens,0.00021054832433301397
+amenity_43,0.00020917542944857162
+amenity_230,0.0002067053421605501
+amenity_22,0.00020405382857591406
+amenity_73,0.00019108215067831572
+amenity_112,0.0001888392654470788
+neighbourhood_cleansed_Sunnyside,0.00018816375685840663
+amenity_52,0.00018809353758540134
+neighbourhood_cleansed_Jamaica Hills,0.00018426718431355878
+amenity_81,0.00018044055016266513
+neighbourhood_cleansed_Inwood,0.00017923184657763557
+amenity_2,0.00017647650068745857
+amenity_6,0.00017197722476427243
+neighbourhood_cleansed_Boerum Hill,0.00016688109950621023
+amenity_208,0.00016433750072398896
+amenity_141,0.00016224866371296613
+neighbourhood_cleansed_South Slope,0.00015496295268567966
+amenity_183,0.00015262700430825188
+neighbourhood_cleansed_Fort Greene,0.0001517849186486813
+property_type_Shared room in loft,0.0001517473920191315
+amenity_140,0.00014984939700894394
+property_type_Private room,0.00014984654404048736
+amenity_220,0.00014975920944009492
+amenity_106,0.00014531513703766377
+amenity_121,0.00013993041052538885
+neighbourhood_cleansed_Jackson Heights,0.00013906801447323197
+property_type_Private room in guest suite,0.00013684567028239634
+neighbourhood_cleansed_Morningside Heights,0.00013683613612652885
+neighbourhood_cleansed_Downtown Brooklyn,0.00013682660025422623
+neighbourhood_cleansed_Borough Park,0.00013511181612120335
+amenity_233,0.00013167670104550523
+amenity_28,0.00012961291319953732
+neighbourhood_cleansed_Tribeca,0.00012841289684150831
+property_type_Room in aparthotel,0.00012757549356482648
+amenity_65,0.00012712385270761712
+neighbourhood_cleansed_Mott Haven,0.00012522750267018507
+neighbourhood_cleansed_Ozone Park,0.00012247878075765165
+neighbourhood_cleansed_Springfield Gardens,0.00012198096643994311
+neighbourhood_cleansed_Glendale,0.00012190074808658698
+amenity_110,0.00012146629916787456
+amenity_130,0.00011993909293909578
+neighbourhood_cleansed_Flatlands,0.00011988118894375758
+neighbourhood_cleansed_Forest Hills,0.00011594978492520405
+property_type_Private room in loft,0.00011378955472229493
+neighbourhood_cleansed_Brighton Beach,0.00011194137014514417
+amenity_105,0.00011092470076808527
+neighbourhood_cleansed_St. Albans,0.0001097613924720296
+property_type_Private room in serviced apartment,0.00010767589616644058
+amenity_108,0.00010615250608225119
+amenity_126,0.0001054037643834658
+amenity_169,0.0001046264224962512
+amenity_33,0.0001027946688165388
+neighbourhood_cleansed_Morris Park,0.00010107096487099448
+property_type_Private room in bed and breakfast,0.0001004248529931248
+neighbourhood_cleansed_Tompkinsville,9.985201319776331e-05
+amenity_168,9.981232531250092e-05
+neighbourhood_cleansed_Pelham Gardens,9.977817011891224e-05
+neighbourhood_cleansed_Wakefield,9.827121249693229e-05
+amenity_215,9.75997019203162e-05
+amenity_236,9.622610870004573e-05
+amenity_207,9.557644510807978e-05
+neighbourhood_cleansed_Kew Gardens,9.555324488095977e-05
+neighbourhood_cleansed_Roosevelt Island,9.510663015831131e-05
+property_type_Entire villa,9.495867425516343e-05
+amenity_250,9.371011333078307e-05
+amenity_127,9.338673383943237e-05
+neighbourhood_cleansed_Bayside,9.221970472315825e-05
+amenity_187,9.159695939094102e-05
+neighbourhood_cleansed_Arrochar,8.94974903483866e-05
+neighbourhood_cleansed_Concourse,8.890884464328878e-05
+neighbourhood_cleansed_Brownsville,8.84684939502878e-05
+amenity_135,8.830289770805726e-05
+neighbourhood_cleansed_Richmond Hill,8.817651831020075e-05
+neighbourhood_cleansed_Clason Point,8.776882164855535e-05
+neighbourhood_cleansed_Maspeth,8.591678739873749e-05
+neighbourhood_cleansed_Little Italy,8.568611514895251e-05
+neighbourhood_cleansed_Edenwald,8.521045470493776e-05
+amenity_50,8.517091527895561e-05
+amenity_31,8.48666964392703e-05
+amenity_177,8.455409655881149e-05
+amenity_166,8.349451203080229e-05
+neighbourhood_cleansed_Corona,8.180547609039407e-05
+amenity_200,8.146513319527539e-05
+amenity_165,8.11264064842128e-05
+amenity_35,8.110050330811755e-05
+neighbourhood_cleansed_Belmont,7.901994667509974e-05
+neighbourhood_cleansed_Gravesend,7.871300817287509e-05
+amenity_227,7.85849250324701e-05
+amenity_13,7.811612632398524e-05
+neighbourhood_cleansed_Rockaway Beach,7.6959885699686e-05
+neighbourhood_cleansed_Norwood,7.695464392172097e-05
+neighbourhood_cleansed_Mount Hope,7.65179739168634e-05
+amenity_255,7.567904289046317e-05
+neighbourhood_cleansed_Flatiron District,7.546590915285907e-05
+neighbourhood_cleansed_Sheepshead Bay,7.542228990544357e-05
+neighbourhood_cleansed_East Morrisania,7.378443701476049e-05
+amenity_201,7.289633503808827e-05
+neighbourhood_cleansed_Nolita,7.28798563058345e-05
+neighbourhood_cleansed_Allerton,7.23263126576983e-05
+amenity_21,7.165377219593014e-05
+amenity_206,7.110037806041927e-05
+neighbourhood_cleansed_Fordham,7.109211234338761e-05
+neighbourhood_cleansed_Highbridge,7.077538070270132e-05
+amenity_251,6.851736875441053e-05
+amenity_17,6.842702245588249e-05
+neighbourhood_cleansed_Parkchester,6.792658610050026e-05
+amenity_101,6.665665334999306e-05
+neighbourhood_cleansed_Claremont Village,6.580044579176142e-05
+amenity_45,6.558764124216811e-05
+amenity_159,6.509141139437243e-05
+neighbourhood_cleansed_South Ozone Park,6.500240623836253e-05
+amenity_252,6.379263802172409e-05
+amenity_219,6.118687182684431e-05
+amenity_67,6.079485163048112e-05
+amenity_123,6.0510278252738886e-05
+neighbourhood_cleansed_Windsor Terrace,5.8839892151548e-05
+neighbourhood_cleansed_Midwood,5.7693622560326755e-05
+neighbourhood_cleansed_Queens Village,5.757597451688853e-05
+amenity_173,5.746590562656809e-05
+neighbourhood_cleansed_College Point,5.666066510970678e-05
+neighbourhood_cleansed_Hollis,5.5679540918879824e-05
+neighbourhood_cleansed_Briarwood,5.4980871583153996e-05
+amenity_66,5.45989679795376e-05
+neighbourhood_cleansed_Rosedale,5.417384442375186e-05
+neighbourhood_cleansed_Port Richmond,5.3678427451218996e-05
+neighbourhood_cleansed_Jamaica Estates,5.32049598438303e-05
+neighbourhood_cleansed_Navy Yard,5.30023135399931e-05
+neighbourhood_cleansed_Fort Hamilton,5.024371639997569e-05
+amenity_1,4.985835640494709e-05
+neighbourhood_cleansed_Little Neck,4.928280063660206e-05
+neighbourhood_cleansed_West Brighton,4.9239450889351254e-05
+amenity_11,4.8329539307570144e-05
+amenity_170,4.807616005899207e-05
+amenity_9,4.745244285169889e-05
+neighbourhood_cleansed_Soundview,4.5012597043354895e-05
+amenity_196,4.496292562968452e-05
+property_type_Private room in guesthouse,4.493134228068821e-05
+property_type_Shared room in condo,4.484696089390953e-05
+neighbourhood_cleansed_Kensington,4.4588299462081476e-05
+neighbourhood_cleansed_Pelham Bay,4.4111781095374095e-05
+amenity_204,4.335201499146895e-05
+neighbourhood_cleansed_Stuyvesant Town,4.3331204441547976e-05
+property_type_Entire guesthouse,4.2723767824518136e-05
+amenity_70,4.22759076454659e-05
+neighbourhood_cleansed_Throgs Neck,4.200203395813e-05
+amenity_161,4.143200637968864e-05
+neighbourhood_cleansed_Breezy Point,4.126930399391224e-05
+amenity_27,4.080586816496476e-05
+property_type_Private room in resort,4.0805115397832565e-05
+amenity_3,4.045977920643722e-05
+neighbourhood_cleansed_Cambria Heights,4.0324777676826055e-05
+neighbourhood_cleansed_Williamsbridge,3.995449801811348e-05
+amenity_137,3.987574424665653e-05
+amenity_184,3.835006903114573e-05
+neighbourhood_cleansed_Dyker Heights,3.7517836409779056e-05
+neighbourhood_cleansed_Bergen Beach,3.612242280956455e-05
+neighbourhood_cleansed_Port Morris,3.594380920954094e-05
+property_type_Private room in casa particular,3.578112955799958e-05
+neighbourhood_cleansed_Longwood,3.556314391416763e-05
+amenity_122,3.5218047208329545e-05
+property_type_Private room in villa,3.4520842125798573e-05
+amenity_71,3.406850948281787e-05
+neighbourhood_cleansed_Prince's Bay,3.36982720154351e-05
+neighbourhood_cleansed_Stapleton,3.3122785670966354e-05
+neighbourhood_cleansed_Brooklyn Heights,3.291965262133957e-05
+neighbourhood_cleansed_Two Bridges,3.250948847237475e-05
+amenity_120,3.223967328070319e-05
+neighbourhood_cleansed_Tremont,3.171384809408477e-05
+property_type_Entire bungalow,3.107559191858329e-05
+amenity_57,3.0852722816932985e-05
+neighbourhood_cleansed_Concord,3.064500025149212e-05
+neighbourhood_cleansed_Melrose,2.899378603828344e-05
+neighbourhood_cleansed_Bronxdale,2.885256226064923e-05
+property_type_Houseboat,2.8341228252655155e-05
+amenity_163,2.815280465736984e-05
+neighbourhood_cleansed_Vinegar Hill,2.756740255065236e-05
+amenity_152,2.647546214969475e-05
+property_type_Private room in tiny home,2.4397314555180826e-05
+neighbourhood_cleansed_Columbia St,2.4245045410102276e-05
+neighbourhood_cleansed_New Brighton,2.3048848609337155e-05
+neighbourhood_cleansed_Randall Manor,2.2647271724292527e-05
+neighbourhood_cleansed_Kingsbridge,2.259769841449141e-05
+neighbourhood_cleansed_Bath Beach,2.259027248576873e-05
+neighbourhood_cleansed_Unionport,2.2149727625878695e-05
+neighbourhood_cleansed_Bensonhurst,2.1529570601505586e-05
+neighbourhood_cleansed_Laurelton,2.1217335500525372e-05
+neighbourhood_cleansed_Mariners Harbor,2.111412975933689e-05
+property_type_Entire vacation home,2.0727126997157087e-05
+property_type_Private room in hostel,2.0368176016104658e-05
+neighbourhood_cleansed_DUMBO,1.992439540170521e-05
+neighbourhood_cleansed_St. George,1.944830926083594e-05
+neighbourhood_cleansed_Rego Park,1.9222857856155076e-05
+amenity_175,1.9074537177180735e-05
+neighbourhood_cleansed_Cobble Hill,1.8955877025631278e-05
+neighbourhood_cleansed_Castleton Corners,1.8359222183461738e-05
+neighbourhood_cleansed_Bayswater,1.761674905285024e-05
+amenity_97,1.7418828963556193e-05
+neighbourhood_cleansed_Howard Beach,1.7121673065672194e-05
+neighbourhood_cleansed_NoHo,1.7039837028157778e-05
+neighbourhood_cleansed_Bull's Head,1.6550809507223887e-05
+neighbourhood_cleansed_Middle Village,1.61156418336247e-05
+amenity_160,1.5289528698740412e-05
+neighbourhood_cleansed_City Island,1.5154868539193629e-05
+neighbourhood_cleansed_Morris Heights,1.4545376151088442e-05
+neighbourhood_cleansed_Shore Acres,1.4320930610962577e-05
+neighbourhood_cleansed_Bellerose,1.4309283143446467e-05
+property_type_Shared room in home,1.4216749427520118e-05
+property_type_Private room in ranch,1.417301427718092e-05
+neighbourhood_cleansed_Battery Park City,1.3360463752754529e-05
+amenity_42,1.330406374386591e-05
+property_type_Private room in earthen home,1.274567527723897e-05
+neighbourhood_cleansed_Fresh Meadows,1.2650372491278268e-05
+neighbourhood_cleansed_New Springville,1.1852857805060061e-05
+neighbourhood_cleansed_Concourse Village,1.1627634137113562e-05
+amenity_147,1.1301848453211193e-05
+neighbourhood_cleansed_Edgemere,1.129521731936536e-05
+property_type_Shared room in casa particular,1.1281251838067762e-05
+neighbourhood_cleansed_Morrisania,1.1070465742550979e-05
+neighbourhood_cleansed_Red Hook,1.0886799269006488e-05
+neighbourhood_cleansed_Mount Eden,1.0689305511645855e-05
+neighbourhood_cleansed_Fieldston,1.0672932538810043e-05
+amenity_240,1.0285787455604435e-05
+property_type_Shared room in townhouse,9.937035581703638e-06
+neighbourhood_cleansed_Belle Harbor,9.851066054689926e-06
+neighbourhood_cleansed_Woodlawn,9.581852056719758e-06
+neighbourhood_cleansed_Grant City,9.197421059890271e-06
+property_type_Private room in houseboat,8.886829291397745e-06
+amenity_8,8.73731419442841e-06
+neighbourhood_cleansed_Whitestone,8.688290382580747e-06
+neighbourhood_cleansed_Kew Gardens Hills,8.11131563623932e-06
+neighbourhood_cleansed_Holliswood,8.021555843288448e-06
+property_type_Room in serviced apartment,7.6090574816365765e-06
+neighbourhood_cleansed_Coney Island,6.996647759431994e-06
+neighbourhood_cleansed_Bay Terrace,6.785345210425434e-06
+neighbourhood_cleansed_Baychester,6.5188016181209e-06
+neighbourhood_cleansed_University Heights,6.154086450351349e-06
+neighbourhood_cleansed_Clifton,6.142860754252826e-06
+property_type_Casa particular,5.989173825331096e-06
+neighbourhood_cleansed_Woodrow,5.64047310378109e-06
+amenity_202,5.422910674859447e-06
+neighbourhood_cleansed_South Beach,5.378203803530373e-06
+neighbourhood_cleansed_Graniteville,5.29327890620339e-06
+neighbourhood_cleansed_Grymes Hill,5.273156418052636e-06
+neighbourhood_cleansed_Civic Center,4.754993336290766e-06
+neighbourhood_cleansed_Mill Basin,4.720685928453089e-06
+property_type_Camper/RV,4.398586407260919e-06
+property_type_Private room in bungalow,4.348611834777378e-06
+neighbourhood_cleansed_Olinville,4.341223839885096e-06
+neighbourhood_cleansed_Manhattan Beach,4.205492047521634e-06
+neighbourhood_cleansed_Rosebank,3.868194456112929e-06
+neighbourhood_cleansed_New Dorp Beach,3.7635541202878873e-06
+amenity_32,3.4208148512096484e-06
+neighbourhood_cleansed_Westchester Square,3.2248851118892475e-06
+neighbourhood_cleansed_Van Nest,3.1713112852948875e-06
+neighbourhood_cleansed_Dongan Hills,2.9953492866090876e-06
+property_type_Private room in kezhan,2.398563996719659e-06
+neighbourhood_cleansed_Castle Hill,2.366968634106934e-06
+property_type_Private room in religious building,2.2514205346672874e-06
+neighbourhood_cleansed_Neponsit,2.1756416110125533e-06
+neighbourhood_cleansed_Douglaston,2.1552212773717163e-06
+property_type_Tiny home,1.8170450737025402e-06
+amenity_78,1.6596782775198896e-06
+property_type_Private room in vacation home,1.622515338596365e-06
+neighbourhood_cleansed_Tottenville,1.6108589978977098e-06
+"neighbourhood_cleansed_Bay Terrace, Staten Island",1.4979953022294858e-06
+neighbourhood_cleansed_Midland Beach,1.4739951149011493e-06
+neighbourhood_cleansed_Co-op City,1.4630706810407061e-06
+neighbourhood_cleansed_Eastchester,1.432776884980023e-06
+neighbourhood_cleansed_Lighthouse Hill,1.344899879790783e-06
+neighbourhood_cleansed_North Riverdale,1.2659008971811416e-06
+neighbourhood_cleansed_Schuylerville,1.0262112991024567e-06
+property_type_Shared room in guest suite,8.163650008412494e-07
+neighbourhood_cleansed_Howland Hook,6.18898487951566e-07
+neighbourhood_cleansed_Eltingville,6.185225210046521e-07
+neighbourhood_cleansed_Great Kills,4.6182511371415535e-07
+neighbourhood_cleansed_Todt Hill,3.943863978283655e-07
+"neighbourhood_cleansed_Chelsea, Staten Island",3.6804599757783513e-07
+neighbourhood_cleansed_West Farms,3.5345846321854755e-07
+neighbourhood_cleansed_Emerson Hill,3.4590742726455813e-07
+property_type_Entire cottage,2.7162258317555864e-07
+neighbourhood_cleansed_Huguenot,2.3176152423199052e-07
+neighbourhood_cleansed_Westerleigh,1.9658604559265383e-07
+property_type_Boat,1.7285591982402054e-07
+neighbourhood_cleansed_Arden Heights,8.750667624230907e-08
+neighbourhood_cleansed_Silver Lake,1.9294628897503583e-08
+property_type_Barn,0.0
+property_type_Private room in castle,0.0
+neighbourhood_cleansed_Marble Hill,0.0
+property_type_Shared room in serviced apartment,0.0
+property_type_Shared room in guesthouse,0.0
+property_type_Shared room,0.0
+neighbourhood_cleansed_Riverdale,0.0
+neighbourhood_cleansed_Spuyten Duyvil,0.0
